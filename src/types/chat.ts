@@ -28,7 +28,7 @@ export interface BotPersonality {
 }
 
 export const defaultPersonality: BotPersonality = {
-  businessName: 'QueryQuest',
+  businessName: 'ModuBot',
   domain: 'technology',
   tone: 'casual-professional',
   audienceDescription: 'Business professionals looking to improve their workflows',

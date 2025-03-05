@@ -1,4 +1,3 @@
-
 import { useState, useRef, useEffect } from 'react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useAuth } from '@/context/auth';
@@ -285,7 +284,7 @@ const ChatInterface = () => {
 
   const botName = botPersonality.businessName 
     ? `${botPersonality.businessName} AI Assistant` 
-    : 'QueryQuest AI Assistant';
+    : 'ModuBot AI Assistant';
 
   return (
     <div className="flex flex-col h-[calc(100vh-12rem)] md:h-[calc(100vh-10rem)] rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden shadow-lg bg-white dark:bg-gray-800">

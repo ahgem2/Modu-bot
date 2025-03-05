@@ -33,7 +33,7 @@ const Index = () => {
                   What Our Users Say
                 </h2>
                 <p className="text-lg text-gray-600 dark:text-gray-300">
-                  Discover how QueryQuest is helping people boost their productivity and creativity.
+                  Discover how ModuBot is helping people boost their productivity and creativity.
                 </p>
               </div>
               
@@ -46,7 +46,7 @@ const Index = () => {
                     ))}
                   </div>
                   <p className="mb-4 text-gray-600 dark:text-gray-300">
-                    "QueryQuest has completely transformed how I work. The AI assistant helps me draft emails, summarize documents, and answer complex questions in seconds."
+                    "ModuBot has completely transformed how I work. The AI assistant helps me draft emails, summarize documents, and answer complex questions in seconds."
                   </p>
                   <div className="flex items-center">
                     <div className="h-10 w-10 rounded-full bg-blue-200 flex items-center justify-center mr-3">
@@ -88,7 +88,7 @@ const Index = () => {
                     ))}
                   </div>
                   <p className="mb-4 text-gray-600 dark:text-gray-300">
-                    "The free tier was enough to convince me of the value. I upgraded to Pro and now I use QueryQuest daily for content creation, research, and brainstorming ideas."
+                    "The free tier was enough to convince me of the value. I upgraded to Pro and now I use ModuBot daily for content creation, research, and brainstorming ideas."
                   </p>
                   <div className="flex items-center">
                     <div className="h-10 w-10 rounded-full bg-purple-200 flex items-center justify-center mr-3">
@@ -140,10 +140,10 @@ const Index = () => {
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
               <div className="col-span-1 md:col-span-2">
                 <h3 className="text-xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-blue-700">
-                  QueryQuest
+                  ModuBot
                 </h3>
                 <p className="text-gray-600 dark:text-gray-300 mb-4 max-w-md">
-                  Experience the power of conversational AI with QueryQuest. Get instant answers, creative content, and intelligent assistance.
+                  Experience the power of conversational AI with ModuBot. Get instant answers, creative content, and intelligent assistance.
                 </p>
                 <div className="flex space-x-4">
                   <a href="#" className="text-gray-400 hover:text-blue-600">
@@ -184,7 +184,7 @@ const Index = () => {
             </div>
 
             <div className="border-t border-gray-200 dark:border-gray-700 mt-12 pt-8 text-center text-gray-500 dark:text-gray-400 text-sm">
-              <p>© {new Date().getFullYear()} QueryQuest. All rights reserved.</p>
+              <p>© {new Date().getFullYear()} ModuBot. All rights reserved.</p>
             </div>
           </div>
         </footer>
