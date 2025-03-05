@@ -1,4 +1,3 @@
-
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { supabase } from '@/lib/supabase';
 import { Session, User as SupabaseUser } from '@supabase/supabase-js';
@@ -186,7 +185,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
           name,
           email,
           credits: 100,
-          is_premium: false
+          isPremium: false
         });
 
         const userProfile = await transformUser(data.user);
@@ -265,7 +264,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     
     try {
       await upsertProfile(user.id, {
-        is_premium: status
+        isPremium: status
       });
       
       setUser({...user, isPremium: status});
