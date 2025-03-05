@@ -1,5 +1,5 @@
 
-import React, { useRef } from 'react'
+import React, { useRef, Suspense } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { OrbitControls, Sphere } from '@react-three/drei'
 import * as THREE from 'three'
@@ -23,18 +23,18 @@ function FloatingSphere({ position, size, color, speed = 1 }: { position: [numbe
 
 function SceneObjects() {
   const spheres = [
-    { position: [-4, 0, -5], size: 1.5, color: "#8B5CF6", speed: 0.5 },
-    { position: [4, 1, -10], size: 2, color: "#D946EF", speed: 0.8 },
-    { position: [-3, -1, -7], size: 1, color: "#0EA5E9", speed: 0.3 },
-    { position: [5, 2, -5], size: 1.2, color: "#F97316", speed: 0.6 },
-    { position: [0, -2, -8], size: 1.8, color: "#8B5CF6", speed: 0.4 },
-    { position: [-6, 2, -12], size: 2.2, color: "#0EA5E9", speed: 0.7 },
+    { position: [-4, 0, -5] as [number, number, number], size: 1.5, color: "#8B5CF6", speed: 0.5 },
+    { position: [4, 1, -10] as [number, number, number], size: 2, color: "#D946EF", speed: 0.8 },
+    { position: [-3, -1, -7] as [number, number, number], size: 1, color: "#0EA5E9", speed: 0.3 },
+    { position: [5, 2, -5] as [number, number, number], size: 1.2, color: "#F97316", speed: 0.6 },
+    { position: [0, -2, -8] as [number, number, number], size: 1.8, color: "#8B5CF6", speed: 0.4 },
+    { position: [-6, 2, -12] as [number, number, number], size: 2.2, color: "#0EA5E9", speed: 0.7 },
   ]
 
   return (
     <>
       <ambientLight intensity={0.5} />
-      <directionalLight position={[10, 10, 5]} intensity={1} />
+      <directionalLight position={[10, 10, 5] as [number, number, number]} intensity={1} />
       
       {spheres.map((sphere, i) => (
         <FloatingSphere
@@ -58,8 +58,10 @@ const Background3D: React.FC = () => {
           background: 'radial-gradient(circle at top left, rgba(131, 58, 180, 0.15) 0%, transparent 50%), radial-gradient(circle at bottom right, rgba(29, 205, 196, 0.1) 0%, transparent 50%), linear-gradient(to bottom right, rgba(101, 78, 163, 0.1) 0%, rgba(218, 226, 248, 0.1) 100%)' 
         }}
       >
-        <OrbitControls enableZoom={false} enablePan={false} enableRotate={false} />
-        <SceneObjects />
+        <Suspense fallback={null}>
+          <OrbitControls enableZoom={false} enablePan={false} enableRotate={false} />
+          <SceneObjects />
+        </Suspense>
       </Canvas>
     </div>
   )
