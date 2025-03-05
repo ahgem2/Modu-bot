@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
-import { BadgeCheck, Beta, Mail } from "lucide-react";
+import { BadgeCheck, Mail, Tag } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
 const CementED = () => {
@@ -68,7 +68,7 @@ const CementED = () => {
       <div className="container max-w-6xl mx-auto px-4 py-12">
         <div className="flex items-center gap-3 mb-4">
           <h1 className="text-4xl font-bold">CementED</h1>
-          <Beta className="text-purple-600 h-8 w-8" />
+          <Tag className="text-purple-600 h-8 w-8" />
           <span className="bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 px-3 py-1 text-sm font-medium rounded-full">
             Beta Program
           </span>
