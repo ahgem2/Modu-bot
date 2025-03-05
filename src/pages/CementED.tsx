@@ -61,8 +61,8 @@ const CementED = () => {
   return (
     <Layout>
       <Helmet>
-        <title>CementED Beta Program - ModuBot</title>
-        <meta name="description" content="Join our CementED beta program to transform your lead generation with personalized communication strategies." />
+        <title>CementED: Edgeless Direction - ModuBot</title>
+        <meta name="description" content="Join our CementED beta program for Edgeless Direction - transform your lead generation with personalized communication strategies." />
       </Helmet>
 
       <div className="container max-w-6xl mx-auto px-4 py-12">
@@ -73,6 +73,8 @@ const CementED = () => {
             Beta Program
           </span>
         </div>
+        
+        <p className="text-xl text-purple-600 font-semibold mb-6">Edgeless Direction for Lead Generation</p>
 
         <div className="grid md:grid-cols-3 gap-8 mt-8">
           <div className="md:col-span-2 space-y-6">
@@ -81,7 +83,7 @@ const CementED = () => {
             </p>
 
             <p className="text-lg leading-relaxed">
-              We design a lead generation pattern that not only attracts potential clients but also nurtures authentic connections, allowing you to engage with people on a deeper, more personal level than ever before.
+              <strong>Edgeless Direction</strong> means we design a lead generation pattern that not only attracts potential clients but also nurtures authentic connections, allowing you to engage with people on a deeper, more personal level than ever before.
             </p>
 
             <p className="text-lg leading-relaxed">
