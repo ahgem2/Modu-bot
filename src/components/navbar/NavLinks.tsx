@@ -3,9 +3,10 @@ import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/context/auth';
 
-interface NavLinksProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface NavLinksProps extends React.HTMLAttributes<HTMLDivElement> {
   direction?: 'row' | 'column';
   showExtraLinks?: boolean;
+  links?: Array<{ label: string; href: string; isProtected?: boolean }>;
 }
 
 export const NavLinks = ({

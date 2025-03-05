@@ -1,14 +1,10 @@
 
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
-import { useAuth } from '@/context/AuthContext';
+import { useAuth } from '@/context/auth';
 import { useToast } from '@/components/ui/use-toast';
 import AuthModal from './AuthModal';
-import { MobileMenu, NavLinks, AuthButtons, Logo } from './navbar';
-
-interface NavLinksProps {
-  links: Array<{ label: string; href: string; isProtected?: boolean }>;
-}
+import { NavLinks, MobileMenu, AuthButtons, Logo } from './navbar';
 
 const Navbar = () => {
   const { user, logout } = useAuth();
@@ -17,16 +13,6 @@ const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [authMode, setAuthMode] = useState<'login' | 'signup'>('login');
-
-  const navLinks: NavLinksProps['links'] = [
-    { label: 'Features', href: '/features' },
-    { label: 'Mission', href: '/mission' },
-    { label: 'Pricing', href: '/pricing' },
-    { label: 'Dashboard', href: '/dashboard', isProtected: true },
-    { label: 'Team', href: '/team', isProtected: true },
-    { label: 'Records', href: '/records', isProtected: true },
-    { label: 'Account', href: '/account', isProtected: true },
-  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -67,7 +53,7 @@ const Navbar = () => {
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between py-4">
             <Logo />
-            <NavLinks links={navLinks} />
+            <NavLinks />
             <AuthButtons 
               onLoginClick={openLoginModal}
               onSignupClick={openSignupModal}
