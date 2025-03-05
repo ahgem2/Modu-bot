@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from 'react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useAuth } from '@/context/auth';
 import { useToast } from '@/components/ui/use-toast';
-import { Message, BotPersonality, defaultPersonality } from '@/types/chat';
+import { Message, BotPersonality, defaultPersonality, ChatSession } from '@/types/chat';
 import { getWelcomeMessage, generateMockResponse } from '@/utils/chatUtils';
 import ChatMessage from '@/components/chat/ChatMessage';
 import ChatInput from '@/components/chat/ChatInput';
@@ -18,6 +18,35 @@ const ChatInterface = () => {
     JSON.parse(localStorage.getItem('botPersonality') || 'null') || defaultPersonality
   );
   const scrollAreaRef = useRef<HTMLDivElement>(null);
+
+  // Initialize sessions
+  useEffect(() => {
+    if (!botPersonality.sessions) {
+      const initialSession: ChatSession = {
+        id: '1',
+        name: 'Default Session',
+        createdAt: new Date(),
+        lastUpdatedAt: new Date(),
+        messages: []
+      };
+      
+      setBotPersonality(prev => ({
+        ...prev,
+        sessions: [initialSession],
+        activeSessionId: initialSession.id
+      }));
+    }
+  }, []);
+
+  // Load active session messages
+  useEffect(() => {
+    if (botPersonality.sessions && botPersonality.activeSessionId) {
+      const activeSession = botPersonality.sessions.find(s => s.id === botPersonality.activeSessionId);
+      if (activeSession) {
+        setMessages(activeSession.messages);
+      }
+    }
+  }, [botPersonality.activeSessionId, botPersonality.sessions]);
 
   // Scroll to bottom when messages change
   useEffect(() => {
@@ -34,23 +63,58 @@ const ChatInterface = () => {
 
   // Welcome message
   useEffect(() => {
-    if (messages.length === 0) {
-      const welcomeMessage = getWelcomeMessage(botPersonality);
-      setMessages([
-        {
+    if (messages.length === 0 && botPersonality.sessions && botPersonality.activeSessionId) {
+      const activeSession = botPersonality.sessions.find(s => s.id === botPersonality.activeSessionId);
+      if (activeSession && activeSession.messages.length === 0) {
+        const welcomeMessage = getWelcomeMessage(botPersonality);
+        const welcomeMsg: Message = {
           id: '1',
           role: 'assistant',
           content: user ? welcomeMessage.replace('Hi there', `Hello${user.name ? ' ' + user.name : ''}`) : welcomeMessage,
-          timestamp: new Date()
-        }
-      ]);
+          timestamp: new Date(),
+          sessionId: botPersonality.activeSessionId
+        };
+        
+        // Update both local messages and session messages
+        setMessages([welcomeMsg]);
+        updateSessionMessages(botPersonality.activeSessionId, [welcomeMsg]);
+      }
     }
-  }, [user, messages.length, botPersonality]);
+  }, [user, messages.length, botPersonality, botPersonality.activeSessionId, botPersonality.sessions]);
 
   const handleBotPersonalityUpdate = (newPersonality: BotPersonality) => {
-    setBotPersonality(newPersonality);
-    // Clear chat to show new welcome message
-    setMessages([]);
+    setBotPersonality(prev => ({
+      ...newPersonality,
+      sessions: prev.sessions,
+      activeSessionId: prev.activeSessionId
+    }));
+    // Clear chat to show new welcome message for the current session
+    if (botPersonality.activeSessionId) {
+      updateSessionMessages(botPersonality.activeSessionId, []);
+      setMessages([]);
+    }
+  };
+
+  const updateSessionMessages = (sessionId: string, newMessages: Message[]) => {
+    setBotPersonality(prev => {
+      if (!prev.sessions) return prev;
+      
+      const updatedSessions = prev.sessions.map(session => {
+        if (session.id === sessionId) {
+          return {
+            ...session,
+            messages: newMessages,
+            lastUpdatedAt: new Date()
+          };
+        }
+        return session;
+      });
+      
+      return {
+        ...prev,
+        sessions: updatedSessions
+      };
+    });
   };
 
   const handleSendMessage = async (inputMessage: string) => {
@@ -75,14 +139,20 @@ const ChatInterface = () => {
       return;
     }
 
+    if (!botPersonality.activeSessionId) return;
+
     const userMsg: Message = {
       id: Date.now().toString(),
       role: 'user',
       content: inputMessage,
-      timestamp: new Date()
+      timestamp: new Date(),
+      sessionId: botPersonality.activeSessionId
     };
 
-    setMessages(prev => [...prev, userMsg]);
+    const updatedMessages = [...messages, userMsg];
+    setMessages(updatedMessages);
+    updateSessionMessages(botPersonality.activeSessionId, updatedMessages);
+    
     setIsLoading(true);
 
     // Simulate AI thinking delay
@@ -93,10 +163,13 @@ const ChatInterface = () => {
           id: (Date.now() + 1).toString(),
           role: 'assistant',
           content: generateMockResponse(inputMessage, botPersonality),
-          timestamp: new Date()
+          timestamp: new Date(),
+          sessionId: botPersonality.activeSessionId
         };
 
-        setMessages(prev => [...prev, aiResponse]);
+        const finalMessages = [...updatedMessages, aiResponse];
+        setMessages(finalMessages);
+        updateSessionMessages(botPersonality.activeSessionId, finalMessages);
         
         // Decrease credit count if not premium
         if (!user.isPremium) {
@@ -116,7 +189,90 @@ const ChatInterface = () => {
   };
 
   const clearChat = () => {
+    if (botPersonality.activeSessionId) {
+      setMessages([]);
+      updateSessionMessages(botPersonality.activeSessionId, []);
+    }
+  };
+
+  const handleNewSession = () => {
+    const newSession: ChatSession = {
+      id: Date.now().toString(),
+      name: `Session ${botPersonality.sessions ? botPersonality.sessions.length + 1 : 1}`,
+      createdAt: new Date(),
+      lastUpdatedAt: new Date(),
+      messages: []
+    };
+
+    setBotPersonality(prev => ({
+      ...prev,
+      sessions: [...(prev.sessions || []), newSession],
+      activeSessionId: newSession.id
+    }));
+
     setMessages([]);
+  };
+
+  const handleLoadSession = (sessionId: string) => {
+    setBotPersonality(prev => ({
+      ...prev,
+      activeSessionId: sessionId
+    }));
+  };
+
+  const handleSaveSession = (name: string) => {
+    if (!botPersonality.activeSessionId) return;
+    
+    setBotPersonality(prev => {
+      if (!prev.sessions) return prev;
+      
+      const updatedSessions = prev.sessions.map(session => {
+        if (session.id === prev.activeSessionId) {
+          return {
+            ...session,
+            name,
+            lastUpdatedAt: new Date()
+          };
+        }
+        return session;
+      });
+      
+      return {
+        ...prev,
+        sessions: updatedSessions
+      };
+    });
+
+    toast({
+      title: "Session saved",
+      description: `Chat session "${name}" has been saved.`
+    });
+  };
+
+  const handleDeleteSession = (sessionId: string) => {
+    setBotPersonality(prev => {
+      if (!prev.sessions) return prev;
+      
+      // Filter out the deleted session
+      const updatedSessions = prev.sessions.filter(session => session.id !== sessionId);
+      
+      // If we're deleting the active session, set a new active session
+      let newActiveId = prev.activeSessionId;
+      if (sessionId === prev.activeSessionId) {
+        newActiveId = updatedSessions.length > 0 ? updatedSessions[0].id : undefined;
+      }
+      
+      return {
+        ...prev,
+        sessions: updatedSessions,
+        activeSessionId: newActiveId
+      };
+    });
+
+    toast({
+      title: "Session deleted",
+      description: "Chat session has been deleted."
+    });
   };
 
   // Determine if the chat input should be disabled
@@ -140,6 +296,12 @@ const ChatInterface = () => {
         isPremium={user?.isPremium}
         currentPersonality={botPersonality}
         onPersonalityUpdate={handleBotPersonalityUpdate}
+        sessions={botPersonality.sessions || []}
+        activeSessionId={botPersonality.activeSessionId}
+        onNewSession={handleNewSession}
+        onLoadSession={handleLoadSession}
+        onSaveSession={handleSaveSession}
+        onDeleteSession={handleDeleteSession}
       />
 
       <ScrollArea className="flex-1 p-4" ref={scrollAreaRef}>

@@ -4,6 +4,15 @@ export interface Message {
   role: 'user' | 'assistant';
   content: string;
   timestamp: Date;
+  sessionId?: string;
+}
+
+export interface ChatSession {
+  id: string;
+  name: string;
+  createdAt: Date;
+  lastUpdatedAt: Date;
+  messages: Message[];
 }
 
 export interface BotPersonality {
@@ -14,6 +23,8 @@ export interface BotPersonality {
   audienceDescription: string;
   keyProducts: string;
   specialInstructions: string;
+  sessions?: ChatSession[];
+  activeSessionId?: string;
 }
 
 export const defaultPersonality: BotPersonality = {
