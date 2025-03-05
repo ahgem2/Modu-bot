@@ -34,6 +34,14 @@ const NavLinks = () => {
       >
         Pricing
       </Link>
+      <Link 
+        to="/features" 
+        className={`transition-all duration-200 hover:text-purple-600 ${
+          location.pathname.includes('/features') ? 'font-medium text-purple-600' : ''
+        }`}
+      >
+        Features
+      </Link>
       {user && (
         <Link 
           to="/account" 

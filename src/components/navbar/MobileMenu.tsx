@@ -47,6 +47,13 @@ const MobileMenu = ({ isOpen, onClose, onLoginClick, onSignupClick }: MobileMenu
       >
         Pricing
       </Link>
+      <Link 
+        to="/features" 
+        className={`block py-2 ${location.pathname.includes('/features') ? 'font-medium text-purple-600' : ''}`}
+        onClick={onClose}
+      >
+        Features
+      </Link>
       {user && (
         <Link 
           to="/account" 
