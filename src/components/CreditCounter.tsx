@@ -27,8 +27,8 @@ const CreditCounter = ({ credits, isPremium }: CreditCounterProps = {}) => {
   if (displayCredits === undefined && !user) return null;
 
   return (
-    <div className="relative flex items-center gap-2 p-2 rounded-full bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border border-blue-100 dark:border-blue-800">
-      <div className="flex items-center justify-center w-7 h-7 rounded-full bg-blue-600 text-white text-xs font-semibold">
+    <div className="relative flex items-center gap-2 p-2 rounded-full bg-gradient-to-r from-purple-50 to-blue-50 dark:from-purple-900/20 dark:to-blue-900/20 border border-purple-100 dark:border-purple-800">
+      <div className="flex items-center justify-center w-7 h-7 rounded-full bg-purple-600 text-white text-xs font-semibold">
         AI
       </div>
       <AnimatePresence mode="wait">
@@ -37,7 +37,7 @@ const CreditCounter = ({ credits, isPremium }: CreditCounterProps = {}) => {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
-          className={`font-medium text-sm ${isAnimating ? 'text-blue-600 dark:text-blue-400' : 'text-gray-700 dark:text-gray-300'}`}
+          className={`font-medium text-sm ${isAnimating ? 'text-purple-600 dark:text-purple-400' : 'text-gray-700 dark:text-gray-300'}`}
         >
           {displayCredits} Credits
         </motion.div>

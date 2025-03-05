@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
@@ -16,7 +15,6 @@ const Navbar = () => {
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [authMode, setAuthMode] = useState<'login' | 'signup'>('login');
 
-  // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
@@ -55,20 +53,18 @@ const Navbar = () => {
       >
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between py-4">
-            {/* Logo */}
             <Link 
               to="/" 
-              className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-blue-700 transition-all duration-300 hover:opacity-80"
+              className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 via-blue-500 to-green-400 transition-all duration-300 hover:opacity-80"
             >
-              QueryQuest
+              ModuBot
             </Link>
 
-            {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center space-x-8">
               <Link 
                 to="/" 
-                className={`transition-all duration-200 hover:text-blue-600 ${
-                  location.pathname === '/' ? 'font-medium text-blue-600' : ''
+                className={`transition-all duration-200 hover:text-purple-600 ${
+                  location.pathname === '/' ? 'font-medium text-purple-600' : ''
                 }`}
               >
                 Home
@@ -76,8 +72,8 @@ const Navbar = () => {
               {user && (
                 <Link 
                   to="/dashboard" 
-                  className={`transition-all duration-200 hover:text-blue-600 ${
-                    location.pathname.includes('/dashboard') ? 'font-medium text-blue-600' : ''
+                  className={`transition-all duration-200 hover:text-purple-600 ${
+                    location.pathname.includes('/dashboard') ? 'font-medium text-purple-600' : ''
                   }`}
                 >
                   Dashboard
@@ -85,8 +81,8 @@ const Navbar = () => {
               )}
               <Link 
                 to="/pricing" 
-                className={`transition-all duration-200 hover:text-blue-600 ${
-                  location.pathname.includes('/pricing') ? 'font-medium text-blue-600' : ''
+                className={`transition-all duration-200 hover:text-purple-600 ${
+                  location.pathname.includes('/pricing') ? 'font-medium text-purple-600' : ''
                 }`}
               >
                 Pricing
@@ -94,8 +90,8 @@ const Navbar = () => {
               {user && (
                 <Link 
                   to="/account" 
-                  className={`transition-all duration-200 hover:text-blue-600 ${
-                    location.pathname.includes('/account') ? 'font-medium text-blue-600' : ''
+                  className={`transition-all duration-200 hover:text-purple-600 ${
+                    location.pathname.includes('/account') ? 'font-medium text-purple-600' : ''
                   }`}
                 >
                   Account
@@ -103,7 +99,6 @@ const Navbar = () => {
               )}
             </nav>
 
-            {/* Auth Buttons - Desktop */}
             <div className="hidden md:flex items-center space-x-4">
               {user ? (
                 <Button variant="ghost" onClick={handleLogout} className="btn-hover">
@@ -121,7 +116,6 @@ const Navbar = () => {
               )}
             </div>
 
-            {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="md:hidden p-2 rounded-md text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none"
@@ -131,12 +125,11 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Mobile Menu */}
         {mobileMenuOpen && (
           <div className="md:hidden py-4 px-4 space-y-4 bg-white dark:bg-gray-900 shadow-md animate-fade-in animate-slide-down">
             <Link 
               to="/" 
-              className={`block py-2 ${location.pathname === '/' ? 'font-medium text-blue-600' : ''}`}
+              className={`block py-2 ${location.pathname === '/' ? 'font-medium text-purple-600' : ''}`}
               onClick={() => setMobileMenuOpen(false)}
             >
               Home
@@ -144,7 +137,7 @@ const Navbar = () => {
             {user && (
               <Link 
                 to="/dashboard" 
-                className={`block py-2 ${location.pathname.includes('/dashboard') ? 'font-medium text-blue-600' : ''}`}
+                className={`block py-2 ${location.pathname.includes('/dashboard') ? 'font-medium text-purple-600' : ''}`}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Dashboard
@@ -152,7 +145,7 @@ const Navbar = () => {
             )}
             <Link 
               to="/pricing" 
-              className={`block py-2 ${location.pathname.includes('/pricing') ? 'font-medium text-blue-600' : ''}`}
+              className={`block py-2 ${location.pathname.includes('/pricing') ? 'font-medium text-purple-600' : ''}`}
               onClick={() => setMobileMenuOpen(false)}
             >
               Pricing
@@ -160,7 +153,7 @@ const Navbar = () => {
             {user && (
               <Link 
                 to="/account" 
-                className={`block py-2 ${location.pathname.includes('/account') ? 'font-medium text-blue-600' : ''}`}
+                className={`block py-2 ${location.pathname.includes('/account') ? 'font-medium text-purple-600' : ''}`}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Account
@@ -207,7 +200,6 @@ const Navbar = () => {
         )}
       </header>
 
-      {/* Auth Modal */}
       <AuthModal 
         isOpen={showAuthModal} 
         onClose={() => setShowAuthModal(false)} 
