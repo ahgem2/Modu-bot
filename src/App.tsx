@@ -24,14 +24,14 @@ const queryClient = new QueryClient();
 // Use regular function declaration for App component
 function App() {
   return (
-    <React.StrictMode>
-      <QueryClientProvider client={queryClient}>
-        <HelmetProvider>
-          <AuthProvider>
-            <TooltipProvider>
-              <Toaster />
-              <Sonner />
-              <BrowserRouter>
+    <BrowserRouter>
+      <React.StrictMode>
+        <QueryClientProvider client={queryClient}>
+          <HelmetProvider>
+            <AuthProvider>
+              <TooltipProvider>
+                <Toaster />
+                <Sonner />
                 <Routes>
                   <Route path="/" element={<Index />} />
                   <Route path="/dashboard" element={<Dashboard />} />
@@ -45,12 +45,12 @@ function App() {
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                   <Route path="*" element={<NotFound />} />
                 </Routes>
-              </BrowserRouter>
-            </TooltipProvider>
-          </AuthProvider>
-        </HelmetProvider>
-      </QueryClientProvider>
-    </React.StrictMode>
+              </TooltipProvider>
+            </AuthProvider>
+          </HelmetProvider>
+        </QueryClientProvider>
+      </React.StrictMode>
+    </BrowserRouter>
   );
 }
 
