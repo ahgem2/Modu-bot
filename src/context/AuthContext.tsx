@@ -1,3 +1,4 @@
+
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { supabase } from '@/lib/supabase';
 import { Session, User as SupabaseUser } from '@supabase/supabase-js';
@@ -66,7 +67,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       name: data?.name || supabaseUser.user_metadata?.name || supabaseUser.email?.split('@')[0] || null,
       email: supabaseUser.email || '',
       credits: data?.credits || 100,
-      isPremium: data?.is_premium || false
+      isPremium: data?.isPremium || false
     };
   };
 
