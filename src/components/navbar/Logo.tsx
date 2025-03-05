@@ -1,5 +1,6 @@
 
 import { Link } from 'react-router-dom';
+import { MessageSquareText } from 'lucide-react';
 
 const Logo = () => {
   return (
@@ -7,10 +8,10 @@ const Logo = () => {
       to="/" 
       className="flex items-center gap-2 transition-all duration-300 hover:opacity-80"
     >
-      <img
-        src="/lovable-uploads/6ca6c8a6-2a2d-4504-aadc-09a63e6e1713.png"
-        alt="ModuBot Logo"
-        className="w-8 h-8"
+      <MessageSquareText 
+        size={28}
+        className="text-purple-600" 
+        strokeWidth={2.5}
       />
       <span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 via-blue-500 to-green-400">
         ModuBot
