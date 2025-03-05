@@ -56,17 +56,17 @@ const Hero = () => {
 
   // Demo chat conversation - natural conversation about real estate business
   const conversationScript = [
-    { text: "Hey there! How's your real estate business going these days?", sender: 'bot' as const },
-    { text: "It's going great actually! I've been on a roll with my conversions lately and finally fixed up my workflow.", sender: 'user' as const },
-    { text: "That's awesome to hear! What changes did you make to your workflow?", sender: 'bot' as const },
-    { text: "Mostly automation. Still spending too much time on manual follow-ups though.", sender: 'user' as const },
-    { text: "I might be able to help with that. Have you considered connecting your CRM to automation tools?", sender: 'bot' as const },
-    { text: "I use GoHighLevel but haven't set up many integrations yet. Any recommendations?", sender: 'user' as const },
-    { text: "Definitely! With your GoHighLevel setup, you could use PhantomBuster to auto-generate LinkedIn leads, or n8n for custom workflow automation.", sender: 'bot' as const },
-    { text: "I'm actually spending a lot of time on LinkedIn messaging. Is there a way to streamline that?", sender: 'user' as const },
-    { text: "You're in luck! I can work as a Chrome extension that integrates directly with LinkedIn messaging. Would help you engage prospects faster.", sender: 'bot' as const },
-    { text: "That would be perfect! How difficult is it to set up?", sender: 'user' as const },
-    { text: "Super simple! Just install the extension, connect it to your GoHighLevel account, and I'll help manage conversations across platforms. Want me to walk you through it?", sender: 'bot' as const },
+    { text: "Hey there! How's your real estate business going these days?", sender: 'user' as const },
+    { text: "It's going great actually! I've been on a roll with my conversions lately and finally fixed up my workflow.", sender: 'bot' as const },
+    { text: "That's awesome to hear! What kind of workflow improvements have you made?", sender: 'user' as const },
+    { text: "Mostly automation. Still spending too much time on manual follow-ups though.", sender: 'bot' as const },
+    { text: "I might be able to help with that. Have you considered connecting your CRM to automation tools?", sender: 'user' as const },
+    { text: "I use GoHighLevel but haven't set up many integrations yet. Any recommendations?", sender: 'bot' as const },
+    { text: "Definitely! With your GoHighLevel setup, you could use PhantomBuster to auto-generate LinkedIn leads, or n8n for custom workflow automation.", sender: 'user' as const },
+    { text: "I'm actually spending a lot of time on LinkedIn messaging. Is there a way to streamline that?", sender: 'bot' as const },
+    { text: "You're in luck! I can work as a Chrome extension that integrates directly with LinkedIn messaging. Would help you engage prospects faster.", sender: 'user' as const },
+    { text: "That would be perfect! How difficult is it to set up?", sender: 'bot' as const },
+    { text: "Super simple! Just install the extension, connect it to your GoHighLevel account, and I'll help manage conversations across platforms. Want me to walk you through it?", sender: 'user' as const },
   ];
 
   // Animate the conversation
