@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
@@ -7,17 +7,22 @@ import ChatInterface from '@/components/ChatInterface';
 import CreditCounter from '@/components/CreditCounter';
 import { useAuth } from '@/context/auth';
 import { Button } from '@/components/ui/button';
-import { Sparkles } from 'lucide-react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Sparkles, Settings, MessageSquare } from 'lucide-react';
+import { BotPersonality } from '@/components/BotPersonalitySetup';
+import { Layout } from '@/components/Layout';
 
 const Dashboard = () => {
   const { user, isLoading } = useAuth();
   const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState<string>('chat');
   
   // Redirect to home if not logged in
-  if (!isLoading && !user) {
-    navigate('/');
-    return null;
-  }
+  useEffect(() => {
+    if (!isLoading && !user) {
+      navigate('/');
+    }
+  }, [isLoading, user, navigate]);
 
   // Show loading state while checking authentication
   if (isLoading) {
@@ -28,21 +33,28 @@ const Dashboard = () => {
     );
   }
 
+  if (!user) return null;
+
   return (
-    <>
+    <Layout>
       <Helmet>
         <title>Dashboard | QueryQuest</title>
         <meta name="description" content="Interact with our AI assistant and get answers to your questions." />
       </Helmet>
       
-      <div className="flex flex-col min-h-screen">
-        <Navbar />
-        
-        <main className="flex-1 container mx-auto px-4 py-8">
+      <main className="flex-1 container mx-auto px-4 py-8">
+        <Tabs 
+          defaultValue="chat" 
+          value={activeTab} 
+          onValueChange={setActiveTab}
+          className="w-full"
+        >
           <div className="flex flex-col-reverse md:flex-row gap-8">
             {/* Main Content - Chat Interface */}
             <div className="flex-1">
-              <ChatInterface />
+              <TabsContent value="chat" className="m-0">
+                <ChatInterface />
+              </TabsContent>
             </div>
             
             {/* Sidebar */}
@@ -77,33 +89,27 @@ const Dashboard = () => {
                 <ul className="space-y-3 text-sm text-gray-600 dark:text-gray-300">
                   <li className="flex items-start">
                     <span className="text-blue-600 mr-2">•</span>
+                    <span>Customize your bot's personality using the settings icon.</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-blue-600 mr-2">•</span>
                     <span>Be specific in your questions for better answers.</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-blue-600 mr-2">•</span>
-                    <span>Ask follow-up questions to dive deeper.</span>
+                    <span>Add your business domain to get more relevant responses.</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-blue-600 mr-2">•</span>
-                    <span>Try asking for explanations in different ways.</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-blue-600 mr-2">•</span>
-                    <span>Request specific formats like bullet points.</span>
+                    <span>Adjust your bot's tone to match your brand's voice.</span>
                   </li>
                 </ul>
               </div>
             </div>
           </div>
-        </main>
-        
-        <footer className="bg-gray-100 dark:bg-gray-900 py-6">
-          <div className="container mx-auto px-4 text-center text-gray-500 dark:text-gray-400 text-sm">
-            <p>© {new Date().getFullYear()} QueryQuest. All rights reserved.</p>
-          </div>
-        </footer>
-      </div>
-    </>
+        </Tabs>
+      </main>
+    </Layout>
   );
 };
 

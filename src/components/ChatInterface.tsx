@@ -1,6 +1,6 @@
 
 import { useState, useRef, useEffect } from 'react';
-import { Send, RefreshCw, Loader2 } from 'lucide-react';
+import { Send, RefreshCw, Loader2, Settings } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Avatar } from '@/components/ui/avatar';
@@ -8,6 +8,15 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { useAuth } from '@/context/auth';
 import { useToast } from '@/components/ui/use-toast';
 import CreditCounter from './CreditCounter';
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import BotPersonalitySetup, { BotPersonality } from './BotPersonalitySetup';
 
 interface Message {
   id: string;
@@ -16,12 +25,45 @@ interface Message {
   timestamp: Date;
 }
 
+const defaultPersonality: BotPersonality = {
+  businessName: 'QueryQuest',
+  domain: 'technology',
+  tone: 'casual-professional',
+  audienceDescription: 'Business professionals looking to improve their workflows',
+  keyProducts: 'AI assistant, LinkedIn automation, GoHighLevel integration',
+  specialInstructions: 'Maintain a helpful and casual tone while staying professional'
+};
+
+const domainSpecificWelcomeMessages: Record<string, string> = {
+  'real-estate': "Hello! I'm your real estate assistant. I can help with property listings, market trends, buyer/seller advice, or connecting your CRM to automation tools. How can I assist your real estate business today?",
+  'finance': "Hi there! I'm your finance assistant. I can help with financial planning, investment strategies, market analysis, or connecting your systems to automation tools. How can I assist your finance business today?",
+  'healthcare': "Hello! I'm your healthcare assistant. I can help with appointment scheduling, patient information, insurance questions, or connecting your systems to automation tools. How can I assist your healthcare practice today?",
+  'legal': "Hi there! I'm your legal assistant. I can help with case management, document preparation, legal research, or connecting your systems to automation tools. How can I assist your legal practice today?",
+  'technology': "Hello! I'm your tech assistant. I can help with GoHighLevel integration, LinkedIn automation, PhantomBuster connections, or other technical workflows. How can I assist your tech business today?",
+  'custom': "Hi there! I'm your custom assistant. I can help with your specific business needs, workflow automation, and connecting various tools. How can I assist your business today?"
+};
+
+const getWelcomeMessage = (personality: BotPersonality): string => {
+  const domainMessage = personality.domain === 'custom' && personality.customDomain
+    ? `Hi there! I'm your ${personality.customDomain} assistant.`
+    : domainSpecificWelcomeMessages[personality.domain] || domainSpecificWelcomeMessages.custom;
+    
+  if (personality.businessName) {
+    return `${domainMessage.replace("I'm your", `I'm ${personality.businessName}'s`)} What can I help you with today?`;
+  }
+  
+  return domainMessage;
+};
+
 const ChatInterface = () => {
   const { user, updateCredits } = useAuth();
   const { toast } = useToast();
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputMessage, setInputMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [botPersonality, setBotPersonality] = useState<BotPersonality>(
+    JSON.parse(localStorage.getItem('botPersonality') || 'null') || defaultPersonality
+  );
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -40,19 +82,97 @@ const ChatInterface = () => {
     }
   }, []);
 
+  // Save bot personality to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem('botPersonality', JSON.stringify(botPersonality));
+  }, [botPersonality]);
+
   // Welcome message
   useEffect(() => {
     if (messages.length === 0) {
+      const welcomeMessage = getWelcomeMessage(botPersonality);
       setMessages([
         {
           id: '1',
           role: 'assistant',
-          content: `Hello${user ? ' ' + user.name : ''}! I'm your AI assistant. I can help with GoHighLevel integration, LinkedIn automation via Chrome extension, or connect with tools like PhantomBuster and n8n. How can I assist your business today?`,
+          content: user ? welcomeMessage.replace('Hi there', `Hello${user.name ? ' ' + user.name : ''}`) : welcomeMessage,
           timestamp: new Date()
         }
       ]);
     }
-  }, [user, messages.length]);
+  }, [user, messages.length, botPersonality]);
+
+  const handleBotPersonalityUpdate = (newPersonality: BotPersonality) => {
+    setBotPersonality(newPersonality);
+    // Clear chat to show new welcome message
+    setMessages([]);
+  };
+
+  const generateMockResponse = (message: string): string => {
+    // Use bot personality to customize responses
+    const domain = botPersonality.domain;
+    const tone = botPersonality.tone;
+    
+    let responsePrefix = '';
+    
+    // Domain-specific language
+    switch (domain) {
+      case 'real-estate':
+        responsePrefix = "Based on current market trends in real estate, ";
+        break;
+      case 'finance':
+        responsePrefix = "From a financial perspective, ";
+        break;
+      case 'healthcare':
+        responsePrefix = "In the healthcare field, ";
+        break;
+      case 'legal':
+        responsePrefix = "From a legal standpoint, ";
+        break;
+      case 'technology':
+        responsePrefix = "Looking at the tech integration options, ";
+        break;
+      case 'custom':
+        responsePrefix = "For your specific business needs, ";
+        break;
+      default:
+        responsePrefix = "Based on what you're asking, ";
+    }
+    
+    // Tone adjustments
+    let tonalAdjustment = '';
+    switch (tone) {
+      case 'casual':
+        tonalAdjustment = "I think ";
+        break;
+      case 'professional':
+        tonalAdjustment = "I would recommend ";
+        break;
+      case 'formal':
+        tonalAdjustment = "I would suggest that ";
+        break;
+      case 'casual-professional':
+        tonalAdjustment = "I'd recommend ";
+        break;
+      case 'enthusiastic':
+        tonalAdjustment = "I'm excited to tell you that ";
+        break;
+      default:
+        tonalAdjustment = "I suggest ";
+    }
+    
+    const responses = [
+      responsePrefix + tonalAdjustment + message.split(' ').slice(0, 3).join(' ') + " is something we can definitely help with. Let me provide some tailored information...",
+      "That's a great question about " + (domain === 'real-estate' ? "property management" : "your business workflow") + "! " + tonalAdjustment + "we could approach this by...",
+      responsePrefix + "I understand you're asking about " + message.split(' ').slice(0, 3).join(' ') + ". " + tonalAdjustment + "the best approach would be...",
+      "Thanks for asking about that aspect of " + (domain === 'custom' && botPersonality.customDomain ? botPersonality.customDomain : domain) + ". " + tonalAdjustment + "we should focus on...",
+    ];
+    
+    const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+    const businessName = botPersonality.businessName ? ` with ${botPersonality.businessName}` : '';
+    
+    return randomResponse + "\n\nIs there anything else specific you'd like to know about integrating this" + businessName + "?";
+  };
 
   const handleSendMessage = async () => {
     if (!inputMessage.trim()) return;
@@ -127,26 +247,37 @@ const ChatInterface = () => {
     setMessages([]);
   };
 
-  // Mock response generator
-  const generateMockResponse = (message: string): string => {
-    const responses = [
-      "I understand you're asking about " + message.split(' ').slice(0, 3).join(' ') + ". Let me provide some helpful information...",
-      "That's an interesting question about your business workflow! Based on my knowledge, I would suggest...",
-      "I'm glad you asked about that integration. Here's what I know about connecting these platforms...",
-      "Let me analyze your LinkedIn automation needs. The most important factors to consider are...",
-      "Thanks for your question about GoHighLevel. I've processed your request and here's what I found...",
-    ];
-    
-    const randomResponse = responses[Math.floor(Math.random() * responses.length)];
-    return randomResponse + "\n\nI can also help integrate this with your Chrome extension for LinkedIn if that would be useful. Is there anything else you'd like to know?";
-  };
-
   return (
     <div className="flex flex-col h-[calc(100vh-12rem)] md:h-[calc(100vh-10rem)] rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden shadow-lg bg-white dark:bg-gray-800">
       <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
-        <h2 className="font-semibold text-lg">QueryQuest AI Assistant</h2>
+        <h2 className="font-semibold text-lg">
+          {botPersonality.businessName ? `${botPersonality.businessName} AI Assistant` : 'QueryQuest AI Assistant'}
+        </h2>
         <div className="flex items-center space-x-2">
           {user && <CreditCounter credits={user.credits} isPremium={user.isPremium} />}
+          
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon" className="ml-2">
+                <Settings className="h-4 w-4" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent className="overflow-y-auto sm:max-w-lg">
+              <SheetHeader>
+                <SheetTitle>Bot Personality Settings</SheetTitle>
+                <SheetDescription>
+                  Customize your AI assistant to match your business domain and communication style
+                </SheetDescription>
+              </SheetHeader>
+              <div className="mt-6">
+                <BotPersonalitySetup 
+                  currentPersonality={botPersonality}
+                  onSave={handleBotPersonalityUpdate}
+                />
+              </div>
+            </SheetContent>
+          </Sheet>
+
           <Button variant="ghost" size="icon" onClick={clearChat}>
             <RefreshCw className="h-4 w-4" />
           </Button>
