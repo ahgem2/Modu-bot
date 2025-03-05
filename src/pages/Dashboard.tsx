@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import ChatInterface from '@/components/ChatInterface';
 import CreditCounter from '@/components/CreditCounter';
-import { useAuth } from '@/context/AuthContext';
+import { useAuth } from '@/context/auth';
 import { Button } from '@/components/ui/button';
 import { Sparkles } from 'lucide-react';
 
