@@ -5,7 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
-import { AuthProvider } from "@/context/auth";
+import { AuthProvider } from "@/context/auth"; // Fixed import
 import Index from "./pages/Index";
 import Dashboard from "./pages/Dashboard";
 import Account from "./pages/Account";
