@@ -1,4 +1,3 @@
-
 import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useInView, motion } from 'framer-motion';
@@ -27,11 +26,8 @@ const PricingSection = () => {
     }
     
     if (isPremium) {
-      // Simulate upgrading to premium
-      setPremiumStatus(true);
-      navigate('/dashboard');
+      navigate('/payments');
     } else {
-      // Free plan is already active by default
       navigate('/dashboard');
     }
   };
@@ -92,7 +88,6 @@ const PricingSection = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-          {/* Free Plan */}
           <motion.div variants={itemVariants} className="glass-card dark:glass-card-dark rounded-2xl p-8 border border-gray-200 dark:border-gray-700">
             <h3 className="text-2xl font-bold mb-2">Free Plan</h3>
             <p className="text-gray-600 dark:text-gray-300 mb-6">Perfect for getting started</p>
@@ -126,7 +121,6 @@ const PricingSection = () => {
             </Button>
           </motion.div>
           
-          {/* Pro Plan */}
           <motion.div 
             variants={itemVariants} 
             className="glass-card dark:glass-card-dark rounded-2xl p-8 border-2 border-blue-500 dark:border-blue-400 relative shadow-lg"
@@ -182,7 +176,6 @@ const PricingSection = () => {
         </div>
       </motion.div>
 
-      {/* Auth Modal */}
       <AuthModal 
         isOpen={showAuthModal} 
         onClose={() => setShowAuthModal(false)} 

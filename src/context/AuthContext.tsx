@@ -192,6 +192,19 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         const userProfile = await transformUser(data.user);
         setUser(userProfile);
         
+        // Send welcome email
+        try {
+          await supabase.functions.invoke('send-welcome-email', {
+            body: { 
+              email,
+              name
+            }
+          });
+        } catch (emailError) {
+          console.error('Error sending welcome email:', emailError);
+          // Don't block signup if email fails
+        }
+        
         toast({
           title: "Account created",
           description: "Welcome to ModuBot! You've been given 100 credits to start.",
