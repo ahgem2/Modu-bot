@@ -69,8 +69,11 @@ const Hero = () => {
               Conversational AI Made Simple
             </span>
             <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl text-balance bg-clip-text text-transparent bg-gradient-to-r from-purple-600 via-blue-500 to-green-400">
-              Your Personal AI Assistant with Limitless Potential
+              Your Personal AI Assistant
             </h1>
+            <p className="mt-6 text-xl text-black dark:text-gray-200 text-balance font-medium">
+              with Limitless Potential
+            </p>
             <p className="mt-6 text-xl text-gray-600 dark:text-gray-300 text-balance">
               Experience the power of conversational AI with 100 free questions. Get instant answers, creative content, and intelligent assistance.
             </p>
