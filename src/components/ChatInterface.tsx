@@ -47,7 +47,7 @@ const ChatInterface = () => {
         {
           id: '1',
           role: 'assistant',
-          content: `Hello${user ? ' ' + user.name : ''}! I'm your AI assistant. How can I help you today?`,
+          content: `Hello${user ? ' ' + user.name : ''}! I'm your AI assistant. I can help with GoHighLevel integration, LinkedIn automation via Chrome extension, or connect with tools like PhantomBuster and n8n. How can I assist your business today?`,
           timestamp: new Date()
         }
       ]);
@@ -131,14 +131,14 @@ const ChatInterface = () => {
   const generateMockResponse = (message: string): string => {
     const responses = [
       "I understand you're asking about " + message.split(' ').slice(0, 3).join(' ') + ". Let me provide some helpful information...",
-      "That's an interesting question! Based on my knowledge, I would suggest...",
-      "I'm glad you asked about that. Here's what I know about the subject...",
-      "Let me analyze that for you. The most important factors to consider are...",
-      "Thanks for your question. I've processed your request and here's what I found...",
+      "That's an interesting question about your business workflow! Based on my knowledge, I would suggest...",
+      "I'm glad you asked about that integration. Here's what I know about connecting these platforms...",
+      "Let me analyze your LinkedIn automation needs. The most important factors to consider are...",
+      "Thanks for your question about GoHighLevel. I've processed your request and here's what I found...",
     ];
     
     const randomResponse = responses[Math.floor(Math.random() * responses.length)];
-    return randomResponse + "\n\nIs there anything else you'd like to know?";
+    return randomResponse + "\n\nI can also help integrate this with your Chrome extension for LinkedIn if that would be useful. Is there anything else you'd like to know?";
   };
 
   return (
