@@ -7,7 +7,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { AuthProvider } from "@/context/auth"; 
-import Background3D from "./components/Background3D";
+import MountainBackground from "./components/MountainBackground";
 import Index from "./pages/Index";
 import Dashboard from "./pages/Dashboard";
 import Account from "./pages/Account";
@@ -33,7 +33,7 @@ function App() {
             <TooltipProvider>
               <Toaster />
               <Sonner />
-              <Background3D />
+              <MountainBackground />
               <div className="relative z-10">
                 <Routes>
                   <Route path="/" element={<Index />} />
