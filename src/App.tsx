@@ -17,34 +17,38 @@ import Pricing from "./pages/Pricing";
 import CementED from "./pages/CementED";
 import NotFound from "./pages/NotFound";
 
+// Create a new QueryClient instance
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <HelmetProvider>
-      <AuthProvider>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/account" element={<Account />} />
-              <Route path="/payments" element={<Payments />} />
-              <Route path="/payment-success" element={<PaymentSuccess />} />
-              <Route path="/features" element={<Features />} />
-              <Route path="/mission" element={<Mission />} />
-              <Route path="/pricing" element={<Pricing />} />
-              <Route path="/cemented" element={<CementED />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </BrowserRouter>
-        </TooltipProvider>
-      </AuthProvider>
-    </HelmetProvider>
-  </QueryClientProvider>
-);
+// Define App as a function component
+function App() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <HelmetProvider>
+        <AuthProvider>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/account" element={<Account />} />
+                <Route path="/payments" element={<Payments />} />
+                <Route path="/payment-success" element={<PaymentSuccess />} />
+                <Route path="/features" element={<Features />} />
+                <Route path="/mission" element={<Mission />} />
+                <Route path="/pricing" element={<Pricing />} />
+                <Route path="/cemented" element={<CementED />} />
+                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </BrowserRouter>
+          </TooltipProvider>
+        </AuthProvider>
+      </HelmetProvider>
+    </QueryClientProvider>
+  );
+}
 
 export default App;
