@@ -21,36 +21,34 @@ import NotFound from "./pages/NotFound";
 // Create the QueryClient outside the component
 const queryClient = new QueryClient();
 
-// Use regular function declaration for App component
+// Define the App component
 function App() {
   return (
-    <BrowserRouter>
-      <React.StrictMode>
-        <QueryClientProvider client={queryClient}>
-          <HelmetProvider>
-            <AuthProvider>
-              <TooltipProvider>
-                <Toaster />
-                <Sonner />
-                <Routes>
-                  <Route path="/" element={<Index />} />
-                  <Route path="/dashboard" element={<Dashboard />} />
-                  <Route path="/account" element={<Account />} />
-                  <Route path="/payments" element={<Payments />} />
-                  <Route path="/payment-success" element={<PaymentSuccess />} />
-                  <Route path="/features" element={<Features />} />
-                  <Route path="/mission" element={<Mission />} />
-                  <Route path="/pricing" element={<Pricing />} />
-                  <Route path="/cemented" element={<CementED />} />
-                  {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
-              </TooltipProvider>
-            </AuthProvider>
-          </HelmetProvider>
-        </QueryClientProvider>
-      </React.StrictMode>
-    </BrowserRouter>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <HelmetProvider>
+          <AuthProvider>
+            <TooltipProvider>
+              <Toaster />
+              <Sonner />
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/account" element={<Account />} />
+                <Route path="/payments" element={<Payments />} />
+                <Route path="/payment-success" element={<PaymentSuccess />} />
+                <Route path="/features" element={<Features />} />
+                <Route path="/mission" element={<Mission />} />
+                <Route path="/pricing" element={<Pricing />} />
+                <Route path="/cemented" element={<CementED />} />
+                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </TooltipProvider>
+          </AuthProvider>
+        </HelmetProvider>
+      </BrowserRouter>
+    </QueryClientProvider>
   );
 }
 
