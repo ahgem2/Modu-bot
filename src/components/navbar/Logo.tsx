@@ -1,6 +1,6 @@
 
 import { Link } from 'react-router-dom';
-import { Bot } from 'lucide-react';
+import { MessageSquareText } from 'lucide-react';
 
 const Logo = () => {
   return (
@@ -8,7 +8,7 @@ const Logo = () => {
       to="/" 
       className="flex items-center gap-2 transition-all duration-300 hover:opacity-80"
     >
-      <Bot 
+      <MessageSquareText 
         size={28}
         className="text-purple-600" 
         strokeWidth={2.5}
