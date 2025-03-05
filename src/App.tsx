@@ -17,6 +17,7 @@ import Features from "./pages/Features";
 import Mission from "./pages/Mission";
 import Pricing from "./pages/Pricing";
 import CementED from "./pages/CementED";
+import Records from "./pages/Records";
 import NotFound from "./pages/NotFound";
 
 // Create the QueryClient outside the component
@@ -44,6 +45,7 @@ function App() {
                   <Route path="/mission" element={<Mission />} />
                   <Route path="/pricing" element={<Pricing />} />
                   <Route path="/cemented" element={<CementED />} />
+                  <Route path="/records" element={<Records />} />
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                   <Route path="*" element={<NotFound />} />
                 </Routes>

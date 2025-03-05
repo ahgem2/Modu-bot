@@ -51,15 +51,17 @@ function SceneObjects() {
 
 const Background3D: React.FC = () => {
   return (
-    <div className="fixed inset-0 -z-10">
-      <Canvas
-        camera={{ position: [0, 0, 10], fov: 75 }}
+    <div className="fixed inset-0 -z-10 opacity-70">
+      <div 
+        className="absolute inset-0"
         style={{ 
           background: 'radial-gradient(circle at top left, rgba(131, 58, 180, 0.15) 0%, transparent 50%), radial-gradient(circle at bottom right, rgba(29, 205, 196, 0.1) 0%, transparent 50%), linear-gradient(to bottom right, rgba(101, 78, 163, 0.1) 0%, rgba(218, 226, 248, 0.1) 100%)' 
         }}
+      />
+      <Canvas
+        camera={{ position: [0, 0, 10], fov: 75 }}
       >
         <Suspense fallback={null}>
-          <OrbitControls enableZoom={false} enablePan={false} enableRotate={false} />
           <SceneObjects />
         </Suspense>
       </Canvas>
