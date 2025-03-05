@@ -54,14 +54,19 @@ const Hero = () => {
     }
   };
 
-  // Demo chat conversation
+  // Demo chat conversation - more conversational, casual, and focused on integrations
   const conversationScript = [
-    { text: "How can I create a presentation about renewable energy?", sender: 'user' },
-    { text: "I'd be happy to help with your presentation on renewable energy! Here are some key points to include:", sender: 'bot' },
-    { text: "1. Overview of renewable energy types (solar, wind, hydro)\n2. Benefits for environment and economy\n3. Global adoption rates and trends\n4. Challenges and solutions\n5. Future innovations", sender: 'bot' },
-    { text: "Can you suggest some engaging visuals for this presentation?", sender: 'user' },
-    { text: "Great idea! Here are some visual elements to make your presentation stand out:", sender: 'bot' },
-    { text: "• Comparison charts of carbon footprints\n• Interactive maps showing renewable installations\n• Before/after images of areas using green energy\n• Animated diagrams of how each technology works", sender: 'bot' },
+    { text: "Hey! I need to connect my CRM to some automation tools. Any suggestions?", sender: 'user' as const },
+    { text: "Hey there! I'd be happy to help with that. What kind of CRM are you currently using?", sender: 'bot' as const },
+    { text: "I'm using GoHighLevel for my marketing agency clients.", sender: 'user' as const },
+    { text: "Great choice! You have several options for connecting GoHighLevel with automation tools:", sender: 'bot' as const },
+    { text: "1. You can use Zapier to connect with 3000+ apps\n2. Direct API integration with tools like n8n\n3. PhantomBuster for social media automation\n4. Use webhooks to trigger custom workflows", sender: 'bot' as const },
+    { text: "Can you explain how the PhantomBuster integration would work?", sender: 'user' as const },
+    { text: "Sure thing! With PhantomBuster and GoHighLevel, you can:", sender: 'bot' as const },
+    { text: "• Extract leads from LinkedIn/Twitter and auto-import to GoHighLevel\n• Set up trigger-based workflows when new contacts are added\n• Automate follow-ups based on social engagement\n• Create custom audiences for your marketing campaigns", sender: 'bot' as const },
+    { text: "That sounds perfect! How hard is it to set up?", sender: 'user' as const },
+    { text: "It's actually pretty straightforward! You'd need to:", sender: 'bot' as const },
+    { text: "1. Connect PhantomBuster to GoHighLevel via API or Zapier\n2. Configure your data mapping\n3. Set up automation triggers\n\nI can help walk you through each step if you'd like!", sender: 'bot' as const },
   ];
 
   // Animate the conversation
@@ -112,7 +117,7 @@ const Hero = () => {
             <span className="inline-block px-4 py-2 mb-2 text-xs font-medium tracking-wider text-purple-700 uppercase bg-purple-100 rounded-full">
               Conversational AI Made Simple
             </span>
-            <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl text-balance bg-clip-text text-transparent bg-gradient-to-r from-purple-600 via-blue-500 to-green-400">
+            <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl text-balance text-black dark:text-white bg-clip-text">
               Your Personal AI Assistant
             </h1>
             <p className="mt-6 text-xl text-black dark:text-gray-200 text-balance font-medium">
@@ -168,7 +173,7 @@ const Hero = () => {
                     <div className="w-8 h-8 rounded-full bg-gradient-to-r from-purple-600 to-blue-500 flex items-center justify-center text-white text-xs font-bold">AI</div>
                   </div>
                   <div className="bg-gray-100 dark:bg-gray-700 rounded-lg rounded-tl-none p-3 max-w-[80%] text-left">
-                    <p className="text-gray-800 dark:text-gray-200">Hello! I'm ModuBot, your AI assistant. How can I help you today?</p>
+                    <p className="text-gray-800 dark:text-gray-200">Hi there! I'm ModuBot. I can help you integrate with tools like GoHighLevel, PhantomBuster, n8n, and more. What are you working on today?</p>
                   </div>
                 </div>
                 
