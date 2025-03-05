@@ -41,11 +41,11 @@ const MobileMenu = ({ isOpen, onClose, onLoginClick, onSignupClick }: MobileMenu
         </Link>
       )}
       <Link 
-        to="/pricing" 
-        className={`block py-2 ${location.pathname.includes('/pricing') ? 'font-medium text-purple-600' : ''}`}
+        to="/mission" 
+        className={`block py-2 ${location.pathname.includes('/mission') ? 'font-medium text-purple-600' : ''}`}
         onClick={onClose}
       >
-        Pricing
+        Our Mission
       </Link>
       <Link 
         to="/features" 
@@ -53,6 +53,13 @@ const MobileMenu = ({ isOpen, onClose, onLoginClick, onSignupClick }: MobileMenu
         onClick={onClose}
       >
         Features
+      </Link>
+      <Link 
+        to="/pricing" 
+        className={`block py-2 ${location.pathname.includes('/pricing') ? 'font-medium text-purple-600' : ''}`}
+        onClick={onClose}
+      >
+        Pricing
       </Link>
       {user && (
         <Link 

@@ -27,12 +27,12 @@ const NavLinks = () => {
         </Link>
       )}
       <Link 
-        to="/pricing" 
+        to="/mission" 
         className={`transition-all duration-200 hover:text-purple-600 ${
-          location.pathname.includes('/pricing') ? 'font-medium text-purple-600' : ''
+          location.pathname.includes('/mission') ? 'font-medium text-purple-600' : ''
         }`}
       >
-        Pricing
+        Our Mission
       </Link>
       <Link 
         to="/features" 
@@ -41,6 +41,14 @@ const NavLinks = () => {
         }`}
       >
         Features
+      </Link>
+      <Link 
+        to="/pricing" 
+        className={`transition-all duration-200 hover:text-purple-600 ${
+          location.pathname.includes('/pricing') ? 'font-medium text-purple-600' : ''
+        }`}
+      >
+        Pricing
       </Link>
       {user && (
         <Link 
