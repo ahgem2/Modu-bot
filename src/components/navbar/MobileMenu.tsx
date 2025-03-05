@@ -61,6 +61,13 @@ const MobileMenu = ({ isOpen, onClose, onLoginClick, onSignupClick }: MobileMenu
       >
         Pricing
       </Link>
+      <Link 
+        to="/cemented" 
+        className={`block py-2 ${location.pathname.includes('/cemented') ? 'font-medium text-purple-600' : ''}`}
+        onClick={onClose}
+      >
+        CementED <span className="inline-block ml-1 px-1.5 py-0.5 text-xs font-medium bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 rounded-full">Beta</span>
+      </Link>
       {user && (
         <Link 
           to="/account" 

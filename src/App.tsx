@@ -14,6 +14,7 @@ import PaymentSuccess from "./pages/PaymentSuccess";
 import Features from "./pages/Features";
 import Mission from "./pages/Mission";
 import Pricing from "./pages/Pricing";
+import CementED from "./pages/CementED";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -35,6 +36,7 @@ const App = () => (
               <Route path="/features" element={<Features />} />
               <Route path="/mission" element={<Mission />} />
               <Route path="/pricing" element={<Pricing />} />
+              <Route path="/cemented" element={<CementED />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
