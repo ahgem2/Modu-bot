@@ -1,7 +1,6 @@
 
 // Re-export the toast from the UI components
 import { Toast, ToastActionElement, ToastProps } from "@/components/ui/toast";
-import { useToast as useToastOriginal } from "@radix-ui/react-toast";
 import { createContext, useContext, useCallback } from "react";
 
 type ToasterToast = ToastProps & {
