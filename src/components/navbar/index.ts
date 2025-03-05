@@ -1,5 +1,8 @@
 
-export { default as MobileMenu } from './MobileMenu';
-export { default as NavLinks } from './NavLinks';
-export { default as AuthButtons } from './AuthButtons';
-export { default as Logo } from './Logo';
+import { Navbar } from './Navbar';
+import { Logo } from './Logo';
+import { NavLinks } from './NavLinks';
+import { AuthButtons } from './AuthButtons';
+import { MobileMenu } from './MobileMenu';
+
+export { Navbar, Logo, NavLinks, AuthButtons, MobileMenu };

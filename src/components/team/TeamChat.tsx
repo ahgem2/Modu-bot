@@ -1,4 +1,3 @@
-
 import { useState, useRef, useEffect } from 'react';
 import { Team } from '@/types/team';
 import { User } from '@/context/auth/types';
@@ -8,8 +7,9 @@ import { Avatar } from '@/components/ui/avatar';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
-import { Send, Loader2, Users, Zap } from 'lucide-react';
+import { Send, Loader2, Users, Zap, Lock } from 'lucide-react';
 import { generateMockResponse } from '@/utils/chatUtils';
+import { useNavigate } from 'react-router-dom';
 
 interface TeamChatProps {
   team: Team;
@@ -27,12 +27,14 @@ interface ChatMessage {
 
 const TeamChat = ({ team, currentUser }: TeamChatProps) => {
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [inputMessage, setInputMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   
-  // Scroll to bottom when messages change
+  const isPremium = currentUser?.isPremium || false;
+  
   useEffect(() => {
     if (scrollAreaRef.current) {
       const scrollArea = scrollAreaRef.current;
@@ -40,7 +42,6 @@ const TeamChat = ({ team, currentUser }: TeamChatProps) => {
     }
   }, [messages]);
   
-  // Initialize with welcome message
   useEffect(() => {
     if (messages.length === 0) {
       const welcomeMessage: ChatMessage = {
@@ -56,7 +57,15 @@ const TeamChat = ({ team, currentUser }: TeamChatProps) => {
   const handleSendMessage = () => {
     if (!inputMessage.trim()) return;
     
-    // Create user message
+    if (!isPremium) {
+      toast({
+        title: "Premium Feature",
+        description: "Team chat is a premium feature. Please upgrade to continue.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
     const userMsg: ChatMessage = {
       id: Date.now().toString(),
       role: 'user',
@@ -71,10 +80,8 @@ const TeamChat = ({ team, currentUser }: TeamChatProps) => {
     setInputMessage('');
     setIsLoading(true);
     
-    // Simulate AI thinking delay
     setTimeout(() => {
       try {
-        // Mock AI response
         const aiResponse: ChatMessage = {
           id: (Date.now() + 1).toString(),
           role: 'assistant',
@@ -117,6 +124,136 @@ const TeamChat = ({ team, currentUser }: TeamChatProps) => {
       .slice(0, 2)
       .toUpperCase();
   };
+
+  const handleUpgradeClick = () => {
+    navigate('/pricing');
+    toast({
+      title: "Premium Feature",
+      description: "Team chat is available with our Pro Plan",
+    });
+  };
+  
+  if (!isPremium) {
+    return (
+      <div className="flex flex-col space-y-4">
+        <Card className="w-full relative">
+          <CardHeader className="p-4 border-b">
+            <CardTitle className="flex items-center justify-between">
+              <div className="flex items-center">
+                <Users className="h-5 w-5 mr-2 text-primary" />
+                <span>{team.name} Chat</span>
+              </div>
+              <div className="text-sm text-gray-500 flex items-center">
+                <Zap className="h-4 w-4 mr-1 text-amber-500" />
+                <span>{team.members.length} members</span>
+              </div>
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="p-0">
+            <div className="flex flex-col h-[calc(70vh-12rem)] relative">
+              <div className="absolute inset-0 backdrop-blur-sm bg-background/50 z-10 flex flex-col items-center justify-center">
+                <div className="bg-background/80 p-8 rounded-lg shadow-lg max-w-md text-center">
+                  <Lock className="h-12 w-12 text-primary mx-auto mb-4" />
+                  <h3 className="text-xl font-bold mb-2">Premium Feature</h3>
+                  <p className="mb-6 text-muted-foreground">
+                    Team collaboration chat is available exclusively for premium users. Upgrade to our Pro plan to access this feature.
+                  </p>
+                  <Button onClick={handleUpgradeClick} className="w-full">
+                    Upgrade to Pro
+                  </Button>
+                </div>
+              </div>
+              <ScrollArea className="flex-1 p-4" ref={scrollAreaRef}>
+                <div className="space-y-4 opacity-20">
+                  {messages.map((msg) => (
+                    <div
+                      key={msg.id}
+                      className={`flex ${
+                        msg.role === 'user' ? 'justify-end' : 'justify-start'
+                      }`}
+                    >
+                      <div
+                        className={`max-w-[80%] rounded-lg p-3 ${
+                          msg.role === 'user'
+                            ? 'bg-primary text-primary-foreground ml-auto'
+                            : 'bg-muted'
+                        }`}
+                      >
+                        {msg.role === 'user' && msg.userName && (
+                          <div className="flex items-center justify-end mb-1 text-xs font-medium opacity-90">
+                            {msg.userName}
+                          </div>
+                        )}
+                        <div className="flex items-start">
+                          {msg.role === 'assistant' && (
+                            <Avatar className="h-8 w-8 mr-2">
+                              <div className="flex h-full w-full items-center justify-center bg-primary text-primary-foreground text-xs font-medium">
+                                AI
+                              </div>
+                            </Avatar>
+                          )}
+                          <div className="flex-1">
+                            <p className="whitespace-pre-line">{msg.content}</p>
+                            <div className="text-xs opacity-70 mt-1">
+                              {msg.timestamp.toLocaleTimeString([], {
+                                hour: '2-digit',
+                                minute: '2-digit',
+                              })}
+                            </div>
+                          </div>
+                          {msg.role === 'user' && (
+                            <Avatar className="h-8 w-8 ml-2">
+                              <div className="flex h-full w-full items-center justify-center bg-gray-300 dark:bg-gray-600 text-xs font-medium">
+                                {msg.userName ? getInitials(msg.userName) : 'U'}
+                              </div>
+                            </Avatar>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                  
+                  {isLoading && (
+                    <div className="flex justify-start">
+                      <div className="max-w-[80%] rounded-lg p-3 bg-muted">
+                        <div className="flex items-start">
+                          <Avatar className="h-8 w-8 mr-2">
+                            <div className="flex h-full w-full items-center justify-center bg-primary text-primary-foreground text-xs font-medium">
+                              AI
+                            </div>
+                          </Avatar>
+                          <div className="flex items-center space-x-2">
+                            <div className="h-2 w-2 rounded-full bg-blue-400 animate-pulse"></div>
+                            <div className="h-2 w-2 rounded-full bg-blue-400 animate-pulse" style={{ animationDelay: "0.2s" }}></div>
+                            <div className="h-2 w-2 rounded-full bg-blue-400 animate-pulse" style={{ animationDelay: "0.4s" }}></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </ScrollArea>
+              
+              <div className="p-4 border-t border-gray-200 dark:border-gray-700">
+                <div className="flex space-x-2">
+                  <Input
+                    value={inputMessage}
+                    onChange={(e) => setInputMessage(e.target.value)}
+                    placeholder="Upgrade to Premium to access team chat"
+                    disabled={true}
+                    className="flex-1"
+                  />
+                  <Button disabled={true}>
+                    <Send className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
   
   return (
     <div className="flex flex-col space-y-4">

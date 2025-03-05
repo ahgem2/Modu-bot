@@ -1,7 +1,8 @@
+
 import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useInView, motion } from 'framer-motion';
-import { Check, Zap } from 'lucide-react';
+import { Check, Zap, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/context/AuthContext';
 import { Switch } from '@/components/ui/switch';
@@ -159,6 +160,13 @@ const PricingSection = () => {
               <li className="flex items-start">
                 <Check className="h-5 w-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
                 <span className="text-gray-600 dark:text-gray-300">API access for integrations</span>
+              </li>
+              <li className="flex items-start">
+                <Check className="h-5 w-5 text-green-500 mr-2 mt-0.5 flex-shrink-0 bg-blue-50 dark:bg-blue-900 rounded-full p-0.5" />
+                <span className="text-blue-600 dark:text-blue-400 font-medium flex items-center">
+                  <Users className="h-4 w-4 mr-1" />
+                  Team collaboration features
+                </span>
               </li>
             </ul>
             
