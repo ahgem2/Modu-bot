@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -118,10 +117,10 @@ const Hero = () => {
               Conversational AI Made Simple
             </span>
             <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl text-balance text-black dark:text-white bg-clip-text">
-              Your Personal AI Assistant
+              Talking, Done Simply
             </h1>
             <p className="mt-6 text-xl text-black dark:text-gray-200 text-balance font-medium">
-              with Limitless Potential
+              Your Personal AI Assistant with Limitless Potential
             </p>
             <p className="mt-6 text-xl text-gray-600 dark:text-gray-300 text-balance">
               Experience the power of conversational AI with 100 free questions. Get instant answers, creative content, and intelligent assistance.
@@ -159,7 +158,7 @@ const Hero = () => {
                 <div className="w-3 h-3 rounded-full bg-red-500 mr-2"></div>
                 <div className="w-3 h-3 rounded-full bg-yellow-500 mr-2"></div>
                 <div className="w-3 h-3 rounded-full bg-green-500 mr-2"></div>
-                <span className="text-sm font-medium ml-2 text-gray-700 dark:text-gray-300">ModuBot AI Chat</span>
+                <span className="text-sm font-medium ml-2 text-gray-700 dark:text-gray-300">Talking, Done Simply</span>
               </div>
               
               <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-6 h-[400px] overflow-y-auto flex flex-col space-y-4">
@@ -228,6 +227,7 @@ const Hero = () => {
             </div>
           </motion.div>
 
+          {/* Stats section */}
           <motion.div 
             className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8"
             variants={itemVariants}

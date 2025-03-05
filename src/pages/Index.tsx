@@ -1,3 +1,4 @@
+
 import { Helmet } from 'react-helmet-async';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
@@ -9,7 +10,7 @@ const Index = () => {
   return (
     <>
       <Helmet>
-        <title>QueryQuest - Your Personal AI Assistant</title>
+        <title>Talking, Done Simply</title>
         <meta name="description" content="Experience the power of conversational AI with 100 free questions. Get instant answers, creative content, and intelligent assistance." />
       </Helmet>
       
