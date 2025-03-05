@@ -1,11 +1,7 @@
-
 import { useRef } from 'react';
 import { useInView } from 'framer-motion';
 import { motion } from 'framer-motion';
 import { MessageSquare, Code, Zap, Repeat, BarChart4, Lock } from 'lucide-react';
-
-// Add dependencies
-<lov-add-dependency>framer-motion@latest</lov-add-dependency>
 
 const FeatureCard = ({ 
   icon, 
