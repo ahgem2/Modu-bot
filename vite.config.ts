@@ -13,6 +13,7 @@ export default defineConfig(({ mode }) => ({
     cors: true, // Enable CORS for all origins
     hmr: {
       clientPort: 8080, // Ensure HMR connections work properly
+      host: "localhost", // Use localhost for HMR connections
     },
   },
   preview: {
