@@ -9,6 +9,14 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
     port: 8080,
+    strictPort: true, // Don't try other ports if 8080 is taken
+    cors: true, // Enable CORS for all origins
+  },
+  preview: {
+    port: 8080,
+    strictPort: true,
+    host: true,
+    cors: true,
   },
   base: "/", // Ensure base path is set correctly for production deployment
   plugins: [
@@ -28,6 +36,13 @@ export default defineConfig(({ mode }) => ({
     assetsDir: "assets",
     emptyOutDir: true,
     chunkSizeWarningLimit: 1000,
+    minify: 'terser', // Use terser for better minification
+    terserOptions: {
+      compress: {
+        drop_console: false, // Keep console logs for debugging
+        drop_debugger: true
+      }
+    },
     rollupOptions: {
       output: {
         manualChunks: (id) => {
@@ -37,6 +52,9 @@ export default defineConfig(({ mode }) => ({
             }
             if (id.includes('@radix-ui')) {
               return 'vendor-radix';
+            }
+            if (id.includes('@tanstack')) {
+              return 'vendor-tanstack';
             }
             return 'vendor'; // all other node_modules
           }
