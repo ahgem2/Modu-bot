@@ -16,6 +16,17 @@ window.addEventListener('unhandledrejection', (event) => {
   // You can add error reporting logic here
 });
 
+// Handle network connection errors
+window.addEventListener('offline', () => {
+  console.error('Network connection lost');
+  document.body.classList.add('offline-mode');
+});
+
+window.addEventListener('online', () => {
+  console.log('Network connection restored');
+  document.body.classList.remove('offline-mode');
+});
+
 // Ensure the root element exists and handle any errors during initialization
 document.addEventListener('DOMContentLoaded', () => {
   try {

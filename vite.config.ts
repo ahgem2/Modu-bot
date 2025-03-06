@@ -7,15 +7,18 @@ import { componentTagger } from "lovable-tagger";
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
   server: {
-    host: "::",
+    host: "0.0.0.0", // Allow connections from all network interfaces
     port: 8080,
     strictPort: true, // Don't try other ports if 8080 is taken
     cors: true, // Enable CORS for all origins
+    hmr: {
+      clientPort: 8080, // Ensure HMR connections work properly
+    },
   },
   preview: {
     port: 8080,
     strictPort: true,
-    host: true,
+    host: "0.0.0.0", // Allow connections from all network interfaces
     cors: true,
   },
   base: "/", // Ensure base path is set correctly for production deployment
