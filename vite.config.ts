@@ -7,21 +7,21 @@ import { componentTagger } from "lovable-tagger";
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
   server: {
-    host: true, // Listen on all addresses including LAN and public addresses
+    host: "0.0.0.0", // Listen on all available network interfaces
     port: 8080,
     strictPort: true, // Don't try other ports if 8080 is taken
     cors: true, // Enable CORS for all origins
     hmr: {
-      clientPort: mode === 'production' ? 443 : undefined, // Let HMR find the correct port in production
-      host: mode === 'production' ? undefined : "localhost", // Let it auto-discover in production
-      protocol: mode === 'production' ? "wss" : "ws", // Use secure WebSockets in production
+      clientPort: 8080, // Use the same port for HMR
+      host: "localhost", // Use localhost for HMR
+      protocol: "ws", // Use WebSocket protocol
       overlay: false, // Disable the overlay to prevent connection issues
     },
   },
   preview: {
     port: 8080,
     strictPort: true,
-    host: true, // Listen on all addresses
+    host: "0.0.0.0", // Listen on all available network interfaces
     cors: true,
   },
   base: "/", // Ensure base path is set correctly for production deployment
