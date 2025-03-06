@@ -36,7 +36,7 @@ function App() {
               <TooltipProvider>
                 <Toaster />
                 <SonnerToaster />
-                <div className="min-h-screen bg-black dark:bg-black">
+                <div className="min-h-screen bg-gradient-to-b from-white to-blue-50 dark:from-gray-900 dark:to-gray-800">
                   <Routes>
                     <Route path="/" element={<Index />} />
                     <Route path="/dashboard" element={<Dashboard />} />
