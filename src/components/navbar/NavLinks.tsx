@@ -9,7 +9,7 @@ export interface NavLinksProps extends React.HTMLAttributes<HTMLDivElement> {
   links?: Array<{ label: string; href: string; isProtected?: boolean }>;
 }
 
-export const NavLinks = ({
+const NavLinks = ({
   className,
   direction = 'row',
   showExtraLinks = true,
@@ -77,3 +77,5 @@ export const NavLinks = ({
     </div>
   );
 };
+
+export default NavLinks;

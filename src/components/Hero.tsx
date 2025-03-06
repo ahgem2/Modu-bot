@@ -1,7 +1,6 @@
-
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { useAuth } from '@/context/AuthContext';
+import { useAuth } from '@/context/auth';
 import { useNavigate } from 'react-router-dom';
 import AuthModal from './AuthModal';
 import { DemoChat, HeroHeader, HeroActions, StatsSection } from './hero';
