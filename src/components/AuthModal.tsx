@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/components/ui/use-toast';
 import { Loader2 } from 'lucide-react';
+import { useAuth } from '@/context/auth';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -20,6 +21,7 @@ const AuthModal = ({ isOpen, onClose, initialMode }: AuthModalProps) => {
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
+  const { login, signup } = useAuth();
 
   console.log("AuthModal rendered");
 
@@ -41,14 +43,12 @@ const AuthModal = ({ isOpen, onClose, initialMode }: AuthModalProps) => {
     console.log("Auth form submitted:", mode, email);
 
     try {
-      // Simplified for now
-      setTimeout(() => {
-        toast({
-          title: mode === 'login' ? "Logged in successfully" : "Account created",
-          description: mode === 'login' ? "Welcome back to ModuBot!" : "Welcome to ModuBot! You've been given 100 credits to start.",
-        });
-        handleClose();
-      }, 1000);
+      if (mode === 'login') {
+        await login(email, password);
+      } else {
+        await signup(name, email, password);
+      }
+      handleClose();
     } catch (error) {
       console.error('Auth error:', error);
       toast({

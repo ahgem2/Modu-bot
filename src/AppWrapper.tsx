@@ -1,6 +1,7 @@
 
 import React, { Suspense } from 'react';
 import ErrorBoundary from '@/components/ErrorBoundary';
+import { AuthProvider } from '@/context/auth';
 import App from './App';
 
 const AppWrapper = () => {
@@ -8,9 +9,11 @@ const AppWrapper = () => {
   
   return (
     <ErrorBoundary>
-      <Suspense fallback={<div className="h-screen w-screen flex items-center justify-center">Loading...</div>}>
-        <App />
-      </Suspense>
+      <AuthProvider>
+        <Suspense fallback={<div className="h-screen w-screen flex items-center justify-center">Loading...</div>}>
+          <App />
+        </Suspense>
+      </AuthProvider>
     </ErrorBoundary>
   );
 };
