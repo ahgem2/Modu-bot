@@ -1,6 +1,7 @@
 
 import { ReactNode, memo } from 'react';
 import Navbar from './Navbar';
+import HomeNavBar from './HomeNavBar';
 
 interface LayoutProps {
   children: ReactNode;
@@ -11,6 +12,7 @@ export const Layout = memo(({ children }: LayoutProps) => {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
+      <HomeNavBar />
       <main className="flex-grow">
         {children}
       </main>
