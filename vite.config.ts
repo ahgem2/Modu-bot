@@ -24,11 +24,22 @@ export default defineConfig(({ mode }) => ({
   build: {
     // Optimize build settings
     sourcemap: false,
+    outDir: "dist",
+    assetsDir: "assets",
+    emptyOutDir: true,
+    chunkSizeWarningLimit: 1000,
     rollupOptions: {
       output: {
-        manualChunks: {
-          react: ['react', 'react-dom', 'react-router-dom'],
-          ui: ['@/components/ui']
+        manualChunks: (id) => {
+          if (id.includes('node_modules')) {
+            if (id.includes('react') || id.includes('react-dom') || id.includes('react-router')) {
+              return 'vendor-react';
+            }
+            if (id.includes('@radix-ui')) {
+              return 'vendor-radix';
+            }
+            return 'vendor'; // all other node_modules
+          }
         }
       }
     }
