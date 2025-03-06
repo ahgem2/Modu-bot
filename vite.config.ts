@@ -14,6 +14,7 @@ export default defineConfig(({ mode }) => ({
     hmr: {
       clientPort: 8080, // Ensure HMR connections work properly
       host: "localhost", // Use localhost for HMR connections
+      protocol: "ws", // Use ws protocol instead of wss
     },
   },
   preview: {
