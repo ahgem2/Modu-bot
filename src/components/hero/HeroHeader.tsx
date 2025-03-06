@@ -19,7 +19,7 @@ const HeroHeader = () => {
       <span className="inline-block px-4 py-2 mb-2 text-xs font-medium tracking-wider text-purple-700 uppercase bg-purple-100 rounded-full">
         Conversational AI Made Simple
       </span>
-      <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl text-balance text-black dark:text-white bg-clip-text">
+      <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl text-balance text-white bg-clip-text">
         Talking, Done Simply.
       </h1>
       <p className="mt-6 text-xl text-black dark:text-gray-200 text-balance font-medium">
