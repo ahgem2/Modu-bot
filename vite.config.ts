@@ -12,9 +12,9 @@ export default defineConfig(({ mode }) => ({
     strictPort: true, // Don't try other ports if 8080 is taken
     cors: true, // Enable CORS for all origins
     hmr: {
-      clientPort: 8080, // Ensure HMR connections work properly
-      host: "localhost", // Use localhost for HMR connections
-      protocol: "ws", // Use ws protocol instead of wss
+      clientPort: mode === 'production' ? 443 : 8080, // Use proper port based on environment
+      host: mode === 'production' ? undefined : "localhost", // Don't specify host in production
+      protocol: mode === 'production' ? "wss" : "ws", // Use secure protocol in production
     },
   },
   preview: {
