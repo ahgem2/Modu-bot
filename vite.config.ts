@@ -13,8 +13,9 @@ export default defineConfig(({ mode }) => ({
     cors: true, // Enable CORS for all origins
     hmr: {
       clientPort: mode === 'production' ? 443 : 8080, // Use proper port based on environment
-      host: mode === 'production' ? undefined : "localhost", // Don't specify host in production
-      protocol: mode === 'production' ? "wss" : "ws", // Use secure protocol in production
+      host: "localhost", // Use localhost for all environments to ensure proper connections
+      protocol: "ws", // Use regular WebSocket protocol for all environments
+      overlay: false, // Disable the overlay to prevent connection issues
     },
   },
   preview: {
