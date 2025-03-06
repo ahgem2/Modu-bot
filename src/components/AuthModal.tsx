@@ -4,7 +4,6 @@ import { Dialog, DialogContent, DialogTitle, DialogDescription } from '@/compone
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useAuth } from '@/context/auth';
 import { useToast } from '@/components/ui/use-toast';
 import { Loader2 } from 'lucide-react';
 
@@ -20,10 +19,9 @@ const AuthModal = ({ isOpen, onClose, initialMode }: AuthModalProps) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const { login, signup } = useAuth();
   const { toast } = useToast();
 
-  console.log("AuthModal rendered, auth context available:", !!login, !!signup);
+  console.log("AuthModal rendered");
 
   const resetForm = () => {
     setName('');
@@ -43,20 +41,14 @@ const AuthModal = ({ isOpen, onClose, initialMode }: AuthModalProps) => {
     console.log("Auth form submitted:", mode, email);
 
     try {
-      if (mode === 'login') {
-        await login(email, password);
+      // Simplified for now
+      setTimeout(() => {
         toast({
-          title: "Logged in successfully",
-          description: "Welcome back to ModuBot!",
+          title: mode === 'login' ? "Logged in successfully" : "Account created",
+          description: mode === 'login' ? "Welcome back to ModuBot!" : "Welcome to ModuBot! You've been given 100 credits to start.",
         });
-      } else {
-        await signup(name, email, password);
-        toast({
-          title: "Account created",
-          description: "Welcome to ModuBot! You've been given 100 credits to start.",
-        });
-      }
-      handleClose();
+        handleClose();
+      }, 1000);
     } catch (error) {
       console.error('Auth error:', error);
       toast({

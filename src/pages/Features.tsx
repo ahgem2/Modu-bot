@@ -1,12 +1,14 @@
 
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
+import ErrorBoundary from '@/components/ErrorBoundary';
 import Navbar from '@/components/Navbar';
 import Features from '@/components/Features';
 
 const FeaturesPage = () => {
+  console.log("Rendering Features Page");
   return (
-    <>
+    <ErrorBoundary>
       <Helmet>
         <title>Features | ModuBot</title>
         <meta name="description" content="Explore the features of ModuBot, the intelligent chatbot platform." />
@@ -22,7 +24,7 @@ const FeaturesPage = () => {
           </div>
         </main>
       </div>
-    </>
+    </ErrorBoundary>
   );
 };
 

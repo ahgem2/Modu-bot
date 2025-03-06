@@ -1,8 +1,9 @@
-
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { useAuth } from '@/context/auth';
 import { useToast } from '@/components/ui/use-toast';
+import { Button } from '@/components/ui/button';
+import ErrorBoundary from './ErrorBoundary';
 import AuthModal from './AuthModal';
 import NavLinks from './navbar/NavLinks';
 import MobileMenu from './navbar/MobileMenu';

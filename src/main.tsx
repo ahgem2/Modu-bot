@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import App from './App.tsx';
+import AppWrapper from './AppWrapper.tsx';
 import './index.css';
 
 // Global error handler for unhandled exceptions
@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     root.render(
       <React.StrictMode>
-        <App />
+        <AppWrapper />
       </React.StrictMode>
     );
     

@@ -18,10 +18,13 @@ class ErrorBoundary extends Component<Props, State> {
   }
 
   static getDerivedStateFromError(error: Error): State {
+    // Update state so the next render will show the fallback UI.
+    console.error("Error caught by ErrorBoundary:", error);
     return { hasError: true, error };
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    // You can also log the error to an error reporting service
     console.error("Error caught by ErrorBoundary:", error, errorInfo);
   }
 
