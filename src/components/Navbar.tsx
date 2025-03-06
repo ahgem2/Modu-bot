@@ -4,7 +4,10 @@ import { Menu, X } from 'lucide-react';
 import { useAuth } from '@/context/auth';
 import { useToast } from '@/components/ui/use-toast';
 import AuthModal from './AuthModal';
-import { NavLinks, MobileMenu, AuthButtons, Logo } from './navbar';
+import NavLinks from './navbar/NavLinks';
+import MobileMenu from './navbar/MobileMenu';
+import AuthButtons from './navbar/AuthButtons';
+import Logo from './navbar/Logo';
 
 const Navbar = () => {
   const { user, logout } = useAuth();

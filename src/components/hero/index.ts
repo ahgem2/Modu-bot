@@ -1,5 +1,7 @@
 
-export { default as DemoChat } from './DemoChat';
-export { default as HeroHeader } from './HeroHeader';
-export { default as HeroActions } from './HeroActions';
-export { default as StatsSection } from './StatsSection';
+import DemoChat from './DemoChat';
+import HeroHeader from './HeroHeader';
+import HeroActions from './HeroActions';
+import StatsSection from './StatsSection';
+
+export { DemoChat, HeroHeader, HeroActions, StatsSection };

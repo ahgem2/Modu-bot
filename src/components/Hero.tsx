@@ -1,10 +1,13 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { useAuth } from '@/context/AuthContext';
+import { useAuth } from '@/context/auth';
 import { useNavigate } from 'react-router-dom';
 import AuthModal from './AuthModal';
-import { DemoChat, HeroHeader, HeroActions, StatsSection } from './hero';
+import DemoChat from './hero/DemoChat';
+import HeroHeader from './hero/HeroHeader';
+import HeroActions from './hero/HeroActions';
+import StatsSection from './hero/StatsSection';
 
 const Hero = () => {
   const { user } = useAuth();
