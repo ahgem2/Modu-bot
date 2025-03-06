@@ -10,6 +10,8 @@ interface AuthButtonsProps {
 
 const AuthButtons = ({ onLoginClick, onSignupClick, onLogoutClick }: AuthButtonsProps) => {
   const { user } = useAuth();
+  
+  console.log("AuthButtons rendered, user:", user);
 
   return (
     <div className="hidden md:flex items-center space-x-4">

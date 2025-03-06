@@ -1,4 +1,3 @@
-
 import { createContext, useState, useEffect, ReactNode } from 'react';
 import { supabase } from '@/lib/supabase';
 import { useToast } from '@/components/ui/use-toast';
@@ -12,20 +11,26 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
+  console.log("AuthProvider initializing");
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
 
   useEffect(() => {
+    console.log("AuthProvider useEffect running");
     // Check if user is already authenticated
     const checkSession = async () => {
       try {
+        console.log("Checking session...");
         const { data } = await supabase.auth.getSession();
         
         if (data.session) {
+          console.log("Session found:", data.session.user.id);
           const { user: supabaseUser } = data.session;
           const userProfile = await transformUser(supabaseUser);
           setUser(userProfile);
+        } else {
+          console.log("No session found");
         }
       } catch (error) {
         console.error('Session error:', error);
@@ -40,8 +45,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
         setIsLoading(true);
+        console.log("Auth state changed:", event);
         
         if (event === 'SIGNED_IN' && session?.user) {
+          console.log("User signed in:", session.user.id);
           const userProfile = await transformUser(session.user);
           setUser(userProfile);
           
@@ -51,6 +58,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
             email: userProfile.email
           });
         } else if (event === 'SIGNED_OUT') {
+          console.log("User signed out");
           setUser(null);
         }
         
@@ -59,6 +67,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     );
 
     return () => {
+      console.log("Cleaning up auth subscription");
       subscription.unsubscribe();
     };
   }, []);
@@ -207,6 +216,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       });
     }
   };
+
+  console.log("AuthProvider rendering, user:", user?.id);
 
   return (
     <AuthContext.Provider value={{ 

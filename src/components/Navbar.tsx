@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { useAuth } from '@/context/auth';
-import { useToast } from '@/hooks/use-toast';
+import { useToast } from '@/components/ui/use-toast';
 import AuthModal from './AuthModal';
 import NavLinks from './navbar/NavLinks';
 import MobileMenu from './navbar/MobileMenu';

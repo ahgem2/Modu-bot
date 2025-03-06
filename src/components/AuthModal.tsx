@@ -23,6 +23,8 @@ const AuthModal = ({ isOpen, onClose, initialMode }: AuthModalProps) => {
   const { login, signup } = useAuth();
   const { toast } = useToast();
 
+  console.log("AuthModal rendered, auth context available:", !!login, !!signup);
+
   const resetForm = () => {
     setName('');
     setEmail('');
@@ -38,19 +40,20 @@ const AuthModal = ({ isOpen, onClose, initialMode }: AuthModalProps) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    console.log("Auth form submitted:", mode, email);
 
     try {
       if (mode === 'login') {
         await login(email, password);
         toast({
           title: "Logged in successfully",
-          description: "Welcome back to QueryQuest!",
+          description: "Welcome back to ModuBot!",
         });
       } else {
         await signup(name, email, password);
         toast({
           title: "Account created",
-          description: "Welcome to QueryQuest! You've been given 100 credits to start.",
+          description: "Welcome to ModuBot! You've been given 100 credits to start.",
         });
       }
       handleClose();
