@@ -1,5 +1,5 @@
 
-import React, { Suspense } from "react";
+import React from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { SonnerToaster } from "@/components/ui"; 
 import { TooltipProvider } from "@/components/ui/tooltip";
