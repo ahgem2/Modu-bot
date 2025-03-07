@@ -11,13 +11,6 @@ export default defineConfig(({ mode }) => ({
     port: 8080,
     strictPort: true,
     cors: true,
-    hmr: {
-      // For development mode
-      clientPort: mode === 'production' ? 443 : 8080,
-      host: mode === 'production' ? undefined : "localhost",
-      protocol: mode === 'production' ? "wss" : "ws",
-      overlay: false,
-    },
   },
   preview: {
     port: 8080,
@@ -25,7 +18,7 @@ export default defineConfig(({ mode }) => ({
     host: "0.0.0.0",
     cors: true,
   },
-  base: "/", 
+  base: "./", // Use relative paths for assets - critical for most static hosting
   plugins: [
     react(),
     mode === 'development' &&
@@ -37,19 +30,20 @@ export default defineConfig(({ mode }) => ({
     },
   },
   build: {
-    // Optimize build settings
+    // Optimize build settings for reliable static hosting
     sourcemap: false,
     outDir: "dist",
     assetsDir: "assets",
     emptyOutDir: true,
     chunkSizeWarningLimit: 1000,
-    minify: 'terser', // Use terser for better minification
+    minify: 'terser',
     terserOptions: {
       compress: {
-        drop_console: false, // Keep console logs for debugging
+        drop_console: false,
         drop_debugger: true
       }
     },
+    // Create a self-contained build with no external dependencies
     rollupOptions: {
       output: {
         manualChunks: (id) => {
