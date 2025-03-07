@@ -9,22 +9,23 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: "0.0.0.0", // Listen on all available network interfaces
     port: 8080,
-    strictPort: true, // Don't try other ports if 8080 is taken
-    cors: true, // Enable CORS for all origins
+    strictPort: true,
+    cors: true,
     hmr: {
-      clientPort: 8080, // Use the same port for HMR
-      host: "localhost", // Use localhost for HMR
-      protocol: "ws", // Use WebSocket protocol
-      overlay: false, // Disable the overlay to prevent connection issues
+      // For development mode
+      clientPort: mode === 'production' ? 443 : 8080,
+      host: mode === 'production' ? undefined : "localhost",
+      protocol: mode === 'production' ? "wss" : "ws",
+      overlay: false,
     },
   },
   preview: {
     port: 8080,
     strictPort: true,
-    host: "0.0.0.0", // Listen on all available network interfaces
+    host: "0.0.0.0",
     cors: true,
   },
-  base: "/", // Ensure base path is set correctly for production deployment
+  base: "/", 
   plugins: [
     react(),
     mode === 'development' &&
