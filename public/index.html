@@ -1,0 +1,47 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ModuBot</title>
+  <meta name="description" content="ModuBot - Personalizable AI assistant" />
+  <style>
+    /* Fallback styles until the app loads */
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+        Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      background: linear-gradient(to bottom, #ffffff, #f0f4ff);
+      min-height: 100vh;
+    }
+    .fallback {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100vh;
+      text-align: center;
+      padding: 0 1rem;
+    }
+    .fallback h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    .fallback p {
+      color: #666;
+      max-width: 500px;
+      margin-bottom: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <div id="root">
+    <div class="fallback">
+      <h1>ModuBot</h1>
+      <p>Loading application...</p>
+    </div>
+  </div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+</html>

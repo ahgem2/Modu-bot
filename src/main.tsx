@@ -5,10 +5,11 @@ import AppWrapper from './AppWrapper.tsx';
 import './index.css';
 
 // Check if we have a redirect stored in session storage (from 404.html)
-const redirect = sessionStorage.getItem('redirect');
-if (redirect) {
-  sessionStorage.removeItem('redirect');
-  window.history.replaceState(null, '', redirect);
+const redirectPath = sessionStorage.getItem('redirectPath');
+if (redirectPath) {
+  sessionStorage.removeItem('redirectPath');
+  window.history.replaceState(null, '', redirectPath);
+  console.log('Redirected from 404 page to:', redirectPath);
 }
 
 // Global error handler for unhandled exceptions
