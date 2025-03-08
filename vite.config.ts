@@ -14,7 +14,7 @@ export default defineConfig(({ mode }) => ({
     port: 8080,
     host: true, // Listen on all available network interfaces
   },
-  base: "/", // Use root-relative paths for assets
+  base: "", // Empty string works best for Netlify
   plugins: [
     react(),
     mode === 'development' &&
