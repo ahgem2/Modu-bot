@@ -4,6 +4,13 @@ import { createRoot } from 'react-dom/client';
 import AppWrapper from './AppWrapper.tsx';
 import './index.css';
 
+// Check if we have a redirect stored in session storage (from 404.html)
+const redirect = sessionStorage.getItem('redirect');
+if (redirect) {
+  sessionStorage.removeItem('redirect');
+  window.history.replaceState(null, '', redirect);
+}
+
 // Global error handler for unhandled exceptions
 window.addEventListener('error', (event) => {
   console.error('Global error caught:', event.error);

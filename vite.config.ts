@@ -9,12 +9,14 @@ export default defineConfig(({ mode }) => ({
   server: {
     port: 8080,
     host: true, // Listen on all available network interfaces
+    // Add history API fallback for SPA routing
+    historyApiFallback: true,
   },
   preview: {
     port: 8080,
     host: true, // Listen on all available network interfaces
   },
-  base: "", // Empty string works best for deployment platforms
+  base: "/", // Use root path for better compatibility with hosting platforms
   plugins: [
     react({
       // Add this configuration to avoid issues with useLayoutEffect
