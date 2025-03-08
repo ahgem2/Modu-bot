@@ -15,6 +15,8 @@ export default defineConfig(({ mode }) => ({
   preview: {
     port: 8080,
     host: true, // Listen on all available network interfaces
+    // Add history API fallback for SPA routing in preview mode
+    historyApiFallback: true,
   },
   base: "/", // Use root path for better compatibility with hosting platforms
   plugins: [

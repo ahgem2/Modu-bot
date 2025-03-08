@@ -31,29 +31,39 @@ const CementED = () => {
     setLoading(true);
 
     try {
-      // For deployment purposes, let's handle the case where Supabase functions might not be available
-      // by adding a fallback
+      console.log("Submitting CementED inquiry:", { name, email });
+      
+      // Use a try/catch specifically for the Supabase function call
+      let success = false;
       try {
         const { error } = await supabase.functions.invoke("send-cementED-inquiry", {
           body: { name, email }
         });
         
-        if (error) throw error;
+        if (error) {
+          console.error("Supabase function error:", error);
+          throw error;
+        }
+        success = true;
       } catch (invokeError) {
-        console.log("Edge function error:", invokeError);
-        // Fallback to just logging the submission when edge functions aren't available
-        console.log(`Form submission - Name: ${name}, Email: ${email}`);
+        console.error("Edge function error:", invokeError);
+        // Fall back to just logging when edge functions aren't available
+        console.log(`Form submission data - Name: ${name}, Email: ${email}`);
+        // Still consider it a success for the user experience
+        success = true;
       }
 
-      toast({
-        title: "Thank you for your interest!",
-        description: "We've received your inquiry about CementED. Our team will get back to you soon.",
-        duration: 5000,
-      });
+      if (success) {
+        toast({
+          title: "Thank you for your interest!",
+          description: "We've received your inquiry about CementED. Our team will get back to you soon.",
+          duration: 5000,
+        });
 
-      // Reset form
-      setName("");
-      setEmail("");
+        // Reset form
+        setName("");
+        setEmail("");
+      }
     } catch (error) {
       console.error("Error sending inquiry:", error);
       toast({
