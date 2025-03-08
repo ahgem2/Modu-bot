@@ -14,7 +14,7 @@ export default defineConfig(({ mode }) => ({
     port: 8080,
     host: true, // Listen on all available network interfaces
   },
-  base: "", // Empty string works best for Netlify
+  base: "", // Empty string works best for deployment platforms
   plugins: [
     react({
       // Add this configuration to avoid issues with useLayoutEffect
@@ -33,16 +33,26 @@ export default defineConfig(({ mode }) => ({
     dedupe: ['react', 'react-dom'],
   },
   build: {
-    sourcemap: mode === 'development',
+    sourcemap: mode !== 'production', // Only generate sourcemaps in development
     outDir: "dist",
     assetsDir: "assets",
     emptyOutDir: true,
+    minify: 'terser', // Use terser for better minification
+    terserOptions: {
+      compress: {
+        drop_console: mode === 'production', // Remove console logs in production
+        drop_debugger: mode === 'production', // Remove debugger statements in production
+      },
+    },
     rollupOptions: {
       output: {
         manualChunks: (id) => {
           if (id.includes('node_modules')) {
             if (id.includes('react') || id.includes('react-dom') || id.includes('react-router')) {
               return 'vendor-react';
+            }
+            if (id.includes('@radix-ui') || id.includes('class-variance-authority') || id.includes('tailwind')) {
+              return 'vendor-ui';
             }
             return 'vendor'; // all other node_modules
           }
