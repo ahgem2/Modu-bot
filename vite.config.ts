@@ -16,14 +16,21 @@ export default defineConfig(({ mode }) => ({
   },
   base: "", // Empty string works best for Netlify
   plugins: [
-    react(),
+    react({
+      // Add this configuration to avoid issues with useLayoutEffect
+      jsxImportSource: 'react',
+    }),
     mode === 'development' &&
     componentTagger(),
   ].filter(Boolean),
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
+      // Ensure a single instance of React
+      'react': path.resolve(__dirname, './node_modules/react'),
+      'react-dom': path.resolve(__dirname, './node_modules/react-dom'),
     },
+    dedupe: ['react', 'react-dom'],
   },
   build: {
     sourcemap: mode === 'development',
