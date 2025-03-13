@@ -22,13 +22,11 @@ handleRedirect();
 // Global error handler for unhandled exceptions
 window.addEventListener('error', (event) => {
   console.error('Global error caught:', event.error);
-  // You can add error reporting logic here
 });
 
 // Handle unhandled promise rejections
 window.addEventListener('unhandledrejection', (event) => {
   console.error('Unhandled promise rejection:', event.reason);
-  // You can add error reporting logic here
 });
 
 // Handle network connection errors
@@ -42,18 +40,6 @@ window.addEventListener('online', () => {
   document.body.classList.remove('offline-mode');
 });
 
-// Add connection error detection
-const checkConnection = () => {
-  const testImg = new Image();
-  testImg.src = '/favicon.ico?nc=' + new Date().getTime();
-  testImg.onload = () => console.log('Connection test successful');
-  testImg.onerror = (e) => console.warn('Connection test failed:', e);
-};
-
-// Try to detect connection issues early
-checkConnection();
-
-// Ensure the root element exists and handle any errors during initialization
 document.addEventListener('DOMContentLoaded', () => {
   try {
     const rootElement = document.getElementById('root');
