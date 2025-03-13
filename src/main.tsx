@@ -4,8 +4,18 @@ import { createRoot } from 'react-dom/client';
 import AppWrapper from './AppWrapper.tsx';
 import './index.css';
 
-// Improved redirect handling
+// Improved redirect handling for GitHub Pages and other hosts
 const handleRedirect = () => {
+  // First, check for GitHub Pages-style '?/' format redirects
+  const { pathname, search, hash } = window.location;
+  if (search && search.startsWith('?/')) {
+    console.log('Handling GitHub Pages redirect format');
+    const path = search.substr(2);
+    window.history.replaceState(null, '', path + hash);
+    return true;
+  }
+  
+  // Then check for session storage redirects from 404.html
   const redirectPath = sessionStorage.getItem('redirectPath');
   if (redirectPath) {
     console.log('Handling redirect from 404 page to:', redirectPath);
@@ -13,6 +23,7 @@ const handleRedirect = () => {
     window.history.replaceState(null, '', redirectPath);
     return true;
   }
+  
   return false;
 };
 

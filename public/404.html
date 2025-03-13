@@ -5,22 +5,31 @@
   <meta charset="utf-8">
   <title>Page Not Found</title>
   <script>
-    // Single Page Apps for GitHub Pages / Netlify
+    // GitHub Pages SPA redirect script
     (function() {
-      // Save the current path to session storage
-      sessionStorage.setItem('redirectPath', window.location.pathname + window.location.search + window.location.hash);
+      // Don't use this script when on the actual 404 page (prevents redirect loops)
+      if (window.location.pathname === '/404.html') return;
       
-      // Redirect to the root, which will load the SPA
-      const rootPath = '/';
-      console.log('Redirecting from 404 to:', rootPath);
-      window.location.replace(rootPath);
+      // Single Page Apps for GitHub Pages
+      // https://github.com/rafgraph/spa-github-pages
+      var pathSegmentsToKeep = 0; // Adjust this value based on your repo structure
+      
+      var l = window.location;
+      l.replace(
+        l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+        l.pathname.split('/').slice(0, 1 + pathSegmentsToKeep).join('/') + '/?/' +
+        l.pathname.slice(1).split('/').slice(pathSegmentsToKeep).join('/').replace(/&/g, '~and~') +
+        (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+        l.hash
+      );
     })();
   </script>
 </head>
 <body>
   <div style="text-align: center; padding: 40px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
-    <h1>Redirecting...</h1>
-    <p>If you are not redirected automatically, <a href="/">click here</a>.</p>
+    <h1>Page Not Found</h1>
+    <p>The page you're looking for doesn't exist or has been moved.</p>
+    <p>If you are not redirected automatically, <a href="/">click here</a> to return to the homepage.</p>
   </div>
 </body>
 </html>
