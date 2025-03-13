@@ -5,32 +5,22 @@
   <meta charset="utf-8">
   <title>Page Not Found</title>
   <script>
-    // Single Page Apps for GitHub Pages / Netlify
-    // MIT License
-    // This script checks to see if a redirect is present in the query string,
-    // converts it back into the correct url and adds it to the
-    // browser's history using window.history.replaceState(...),
-    // which won't cause the browser to attempt to load the new url.
-    // When the single page app is loaded further down in this file,
-    // the correct url will be waiting in the browser's history for
-    // the single page app to route accordingly.
-    (function(l) {
-      if (l.search[1] === '/' ) {
-        var decoded = l.search.slice(1).split('&').map(function(s) { 
-          return s.replace(/~and~/g, '&')
-        }).join('?');
-        window.history.replaceState(null, null,
-            l.pathname.slice(0, -1) + decoded + l.hash
-        );
-      }
-    }(window.location))
-    
-    // Store the original path before redirecting
-    sessionStorage.setItem('redirectPath', window.location.pathname);
-    window.location.href = '/';
+    // Improved SPA redirect script for hosting platforms
+    (function() {
+      // Save the current path to session storage
+      sessionStorage.setItem('redirectPath', window.location.pathname + window.location.search + window.location.hash);
+      
+      // Redirect to the root, which will load the SPA
+      const rootPath = '/';
+      console.log('Redirecting from 404 to:', rootPath);
+      window.location.replace(rootPath);
+    })();
   </script>
 </head>
 <body>
-  <p>Redirecting...</p>
+  <div style="text-align: center; padding: 40px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+    <h1>Redirecting...</h1>
+    <p>If you are not redirected automatically, <a href="/">click here</a>.</p>
+  </div>
 </body>
 </html>

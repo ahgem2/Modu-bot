@@ -4,13 +4,20 @@ import { createRoot } from 'react-dom/client';
 import AppWrapper from './AppWrapper.tsx';
 import './index.css';
 
-// Check if we have a redirect stored in session storage (from 404.html)
-const redirectPath = sessionStorage.getItem('redirectPath');
-if (redirectPath) {
-  sessionStorage.removeItem('redirectPath');
-  window.history.replaceState(null, '', redirectPath);
-  console.log('Redirected from 404 page to:', redirectPath);
-}
+// Improved redirect handling
+const handleRedirect = () => {
+  const redirectPath = sessionStorage.getItem('redirectPath');
+  if (redirectPath) {
+    console.log('Handling redirect from 404 page to:', redirectPath);
+    sessionStorage.removeItem('redirectPath');
+    window.history.replaceState(null, '', redirectPath);
+    return true;
+  }
+  return false;
+};
+
+// Execute redirect handling
+handleRedirect();
 
 // Global error handler for unhandled exceptions
 window.addEventListener('error', (event) => {
@@ -34,6 +41,17 @@ window.addEventListener('online', () => {
   console.log('Network connection restored');
   document.body.classList.remove('offline-mode');
 });
+
+// Add connection error detection
+const checkConnection = () => {
+  const testImg = new Image();
+  testImg.src = '/favicon.ico?nc=' + new Date().getTime();
+  testImg.onload = () => console.log('Connection test successful');
+  testImg.onerror = (e) => console.warn('Connection test failed:', e);
+};
+
+// Try to detect connection issues early
+checkConnection();
 
 // Ensure the root element exists and handle any errors during initialization
 document.addEventListener('DOMContentLoaded', () => {

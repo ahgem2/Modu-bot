@@ -9,14 +9,17 @@ export default defineConfig(({ mode }) => ({
   server: {
     port: 8080,
     host: true, // Listen on all available network interfaces
+    strictPort: true, // Don't try different port if 8080 is in use
     // Add history API fallback for SPA routing
-    historyApiFallback: true,
+    proxy: {
+      // Proxy API requests to avoid CORS issues
+      // Example: '/api': 'http://localhost:3000'
+    },
   },
   preview: {
     port: 8080,
-    host: true, // Listen on all available network interfaces
-    // Add history API fallback for SPA routing in preview mode
-    historyApiFallback: true,
+    host: true,
+    strictPort: true,
   },
   base: "/", // Use root path for better compatibility with hosting platforms
   plugins: [

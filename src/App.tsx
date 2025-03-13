@@ -7,6 +7,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import ErrorBoundary from "./components/ErrorBoundary";
+import NetworkStatus from "./components/NetworkStatus";
 import Index from "./pages/Index";
 import Dashboard from "./pages/Dashboard";
 import Account from "./pages/Account";
@@ -21,7 +22,14 @@ import NotFound from "./pages/NotFound";
 import Team from "./pages/Team";
 
 // Create the QueryClient outside the component
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 2,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 // Define the App component
 function App() {
@@ -36,6 +44,7 @@ function App() {
               <TooltipProvider>
                 <Toaster />
                 <SonnerToaster />
+                <NetworkStatus />
                 <div className="min-h-screen bg-gradient-to-b from-white to-blue-50 dark:from-gray-900 dark:to-gray-800">
                   <Routes>
                     <Route path="/" element={<Index />} />
