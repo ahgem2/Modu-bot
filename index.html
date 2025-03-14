@@ -34,6 +34,21 @@
         }
       }(window.location))
     </script>
+
+    <!-- Add a simple script to detect when the DOM is ready -->
+    <script type="text/javascript">
+      document.addEventListener('DOMContentLoaded', function() {
+        console.log('DOM fully loaded and parsed');
+        
+        // Add a message to help debug preview issues
+        const rootElement = document.getElementById('root');
+        if (!rootElement) {
+          console.error('Root element not found!');
+        } else {
+          console.log('Root element found and ready');
+        }
+      });
+    </script>
   </head>
 
   <body>
