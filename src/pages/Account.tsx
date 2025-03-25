@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
-import { useAuth } from '@/context/AuthContext';
+import { useAuth } from '@/context/auth';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -42,8 +42,8 @@ const Account = () => {
   return (
     <>
       <Helmet>
-        <title>Account Settings | QueryQuest</title>
-        <meta name="description" content="Manage your QueryQuest account settings and subscription." />
+        <title>Account Settings | ModuBot</title>
+        <meta name="description" content="Manage your ModuBot account settings and subscription." />
       </Helmet>
       
       <div className="flex flex-col min-h-screen">
@@ -220,7 +220,7 @@ const Account = () => {
         
         <footer className="bg-gray-100 dark:bg-gray-900 py-6">
           <div className="container mx-auto px-4 text-center text-gray-500 dark:text-gray-400 text-sm">
-            <p>© {new Date().getFullYear()} QueryQuest. All rights reserved.</p>
+            <p>© {new Date().getFullYear()} ModuBot. All rights reserved.</p>
           </div>
         </footer>
       </div>
