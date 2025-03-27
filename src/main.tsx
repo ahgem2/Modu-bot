@@ -4,10 +4,17 @@ import { createRoot } from 'react-dom/client';
 import AppWrapper from './AppWrapper.tsx';
 import './index.css';
 
+// DEBUG INFORMATION - Will log routing and script loading issues
+console.log('Application initialization starting...');
+console.log('Current URL:', window.location.href);
+console.log('Current pathname:', window.location.pathname);
+
 // Improved redirect handling for GitHub Pages and other hosts
 const handleRedirect = () => {
   // First, check for GitHub Pages-style '?/' format redirects
   const { pathname, search, hash } = window.location;
+  console.log('Checking for redirects. Search:', search, 'Path:', pathname, 'Hash:', hash);
+  
   if (search && search.startsWith('?/')) {
     console.log('Handling GitHub Pages redirect format');
     const path = search.substr(2);
@@ -28,11 +35,18 @@ const handleRedirect = () => {
 };
 
 // Execute redirect handling
-handleRedirect();
+const didRedirect = handleRedirect();
+console.log('Redirect handling complete, did redirect:', didRedirect);
 
 // Global error handler for unhandled exceptions
 window.addEventListener('error', (event) => {
   console.error('Global error caught:', event.error);
+  // Don't show alert in production as it could be annoying to users
+  if (process.env.NODE_ENV !== 'production') {
+    setTimeout(() => {
+      alert(`Application Error: ${event.error.message || 'Unknown error'}`);
+    }, 0);
+  }
 });
 
 // Handle unhandled promise rejections
@@ -54,11 +68,13 @@ window.addEventListener('online', () => {
 // Use a wrapper function to ensure DOM is ready
 const initApp = () => {
   try {
+    console.log('Initializing application...');
     const rootElement = document.getElementById('root');
     if (!rootElement) {
       throw new Error('Failed to find the root element');
     }
     
+    console.log('Root element found, initializing React');
     const root = createRoot(rootElement);
     
     root.render(
@@ -75,7 +91,8 @@ const initApp = () => {
       <div style="display: flex; justify-content: center; align-items: center; height: 100vh; flex-direction: column; font-family: sans-serif;">
         <h1>Something went wrong</h1>
         <p>The application failed to load. Please try again later.</p>
-        <pre style="background: #f5f5f5; padding: 15px; border-radius: 4px; max-width: 80%;">${error}</pre>
+        <pre style="background: #f5f5f5; padding: 15px; border-radius: 4px; max-width: 80%; overflow: auto;">${error}</pre>
+        <button onclick="window.location.reload()" style="margin-top: 20px; padding: 10px 20px; background: #4f46e5; color: white; border: none; border-radius: 4px; cursor: pointer;">Reload Page</button>
       </div>
     `;
   }
@@ -83,7 +100,11 @@ const initApp = () => {
 
 // Execute initialization when DOM is ready
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initApp);
+  document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOMContentLoaded event fired');
+    initApp();
+  });
 } else {
+  console.log('Document already loaded, initializing immediately');
   initApp();
 }

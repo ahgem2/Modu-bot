@@ -64,7 +64,9 @@ export default defineConfig(({ mode }) => {
             }
           }
         }
-      }
+      },
+      // Add SPA fallback to handle routes in the client
+      assetsInlineLimit: 4096, // Inline small files as data URLs
     }
   };
 });
