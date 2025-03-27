@@ -9,16 +9,13 @@ export default defineConfig(({ mode }) => {
   // Get base path from environment or use default for GitHub Pages
   const base = process.env.BASE_PATH || '/'; 
   
+  console.log(`Building with base path: ${base} in mode: ${mode}`);
+  
   return {
     server: {
       port: 8080,
       host: true, // Listen on all available network interfaces
       strictPort: true, // Don't try different port if 8080 is in use
-      // Add history API fallback for SPA routing
-      proxy: {
-        // Proxy API requests to avoid CORS issues
-        // Example: '/api': 'http://localhost:3000'
-      },
     },
     preview: {
       port: 8080,
@@ -28,7 +25,6 @@ export default defineConfig(({ mode }) => {
     base: base, // Use environment variable or default to root path
     plugins: [
       react({
-        // Add this configuration to avoid issues with useLayoutEffect
         jsxImportSource: 'react',
       }),
       mode === 'development' &&
@@ -37,22 +33,21 @@ export default defineConfig(({ mode }) => {
     resolve: {
       alias: {
         "@": path.resolve(__dirname, "./src"),
-        // Ensure a single instance of React
         'react': path.resolve(__dirname, './node_modules/react'),
         'react-dom': path.resolve(__dirname, './node_modules/react-dom'),
       },
       dedupe: ['react', 'react-dom'],
     },
     build: {
-      sourcemap: mode !== 'production', // Only generate sourcemaps in development
+      sourcemap: true, // Always generate sourcemaps for better debugging
       outDir: "dist",
       assetsDir: "assets",
       emptyOutDir: true,
-      minify: 'terser', // Use terser for better minification
+      minify: mode === 'production' ? 'terser' : false, // Only minify in production
       terserOptions: {
         compress: {
-          drop_console: mode === 'production', // Remove console logs in production
-          drop_debugger: mode === 'production', // Remove debugger statements in production
+          drop_console: false, // Keep console logs for debugging deployment issues
+          drop_debugger: mode === 'production',
         },
       },
       rollupOptions: {

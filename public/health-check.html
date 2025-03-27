@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>ModuBot Health Check</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      text-align: center;
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: #f0f4ff;
+    }
+    .card {
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #4f46e5;
+    }
+    .success {
+      color: #10b981;
+      font-weight: bold;
+    }
+    .details {
+      margin-top: 20px;
+      text-align: left;
+      background: #f8f9fa;
+      padding: 10px;
+      border-radius: 4px;
+      font-family: monospace;
+    }
+  </style>
+  <script>
+    // Simple script to show deployment details
+    document.addEventListener('DOMContentLoaded', function() {
+      document.getElementById('url').textContent = window.location.href;
+      document.getElementById('time').textContent = new Date().toISOString();
+      document.getElementById('user-agent').textContent = navigator.userAgent;
+    });
+  </script>
+</head>
+<body>
+  <div class="card">
+    <h1>ModuBot Health Check</h1>
+    <p class="success">✅ Static file serving is working!</p>
+    <p>If you can see this page, your server is correctly serving static files.</p>
+    <p>Try accessing the <a href="/">main application</a> next.</p>
+    
+    <div class="details">
+      <p><strong>URL:</strong> <span id="url">Loading...</span></p>
+      <p><strong>Time:</strong> <span id="time">Loading...</span></p>
+      <p><strong>User Agent:</strong> <span id="user-agent">Loading...</span></p>
+    </div>
+  </div>
+</body>
+</html>
