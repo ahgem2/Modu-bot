@@ -35,26 +35,27 @@
       }(window.location))
     </script>
 
-    <!-- Add a simple script to detect when the DOM is ready -->
+    <!-- Debug routing and script loading -->
     <script type="text/javascript">
-      document.addEventListener('DOMContentLoaded', function() {
-        console.log('DOM fully loaded and parsed');
-        
-        // Add a message to help debug preview issues
-        const rootElement = document.getElementById('root');
-        if (!rootElement) {
-          console.error('Root element not found!');
-        } else {
-          console.log('Root element found and ready');
-        }
-      });
+      console.log('Initial page load details:');
+      console.log('Full URL:', window.location.href);
+      console.log('Origin:', window.location.origin);
+      console.log('Pathname:', window.location.pathname);
+      console.log('Search:', window.location.search);
+      console.log('Hash:', window.location.hash);
     </script>
   </head>
 
   <body>
-    <div id="root"></div>
-    <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
+    <div id="root">
+      <div class="fallback">
+        <h1>ModuBot</h1>
+        <p>Loading application...</p>
+      </div>
+    </div>
+    <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG -->
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
-    <script type="module" src="./src/main.tsx"></script>
+    <script type="module" src="/src/main.tsx"></script>
+    <script src="/verify-deploy.js"></script>
   </body>
 </html>
