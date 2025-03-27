@@ -1,8 +1,7 @@
-
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { useAuth } from '@/context/AuthContext';
+import { useAuth } from '@/context/auth';
 
 type HeroActionsProps = {
   onTryNow: () => void;

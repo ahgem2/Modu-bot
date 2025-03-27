@@ -38,7 +38,7 @@ const Dashboard = () => {
   return (
     <Layout>
       <Helmet>
-        <title>Dashboard | QueryQuest</title>
+        <title>Dashboard | ModuBot</title>
         <meta name="description" content="Interact with our AI assistant and get answers to your questions." />
       </Helmet>
       
@@ -68,7 +68,7 @@ const Dashboard = () => {
                 {user?.credits === 0 && !user?.isPremium && (
                   <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-4 dark:bg-amber-900/20 dark:border-amber-800">
                     <p className="text-amber-800 dark:text-amber-200 text-sm">
-                      You've used all your free credits. Upgrade to continue using QueryQuest.
+                      You've used all your free credits. Upgrade to continue using ModuBot.
                     </p>
                   </div>
                 )}

@@ -1,10 +1,9 @@
-
 import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useInView, motion } from 'framer-motion';
 import { Check, Zap, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useAuth } from '@/context/AuthContext';
+import { useAuth } from '@/context/auth';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import AuthModal from './AuthModal';
