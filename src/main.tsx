@@ -51,10 +51,13 @@ window.addEventListener('online', () => {
   document.body.classList.remove('offline-mode');
 });
 
-document.addEventListener('DOMContentLoaded', () => {
+// Use a wrapper function to ensure DOM is ready
+const initApp = () => {
   try {
     const rootElement = document.getElementById('root');
-    if (!rootElement) throw new Error('Failed to find the root element');
+    if (!rootElement) {
+      throw new Error('Failed to find the root element');
+    }
     
     const root = createRoot(rootElement);
     
@@ -76,4 +79,11 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
     `;
   }
-});
+};
+
+// Execute initialization when DOM is ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initApp);
+} else {
+  initApp();
+}
