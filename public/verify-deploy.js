@@ -11,6 +11,9 @@ document.addEventListener('DOMContentLoaded', function() {
   try {
     // Log basic environment info
     console.log('Window location:', window.location.href);
+    console.log('Window origin:', window.location.origin);
+    console.log('Window host:', window.location.host);
+    console.log('Window pathname:', window.location.pathname);
     console.log('UserAgent:', navigator.userAgent);
     console.log('Screen size:', window.innerWidth, 'x', window.innerHeight);
     console.log('Document readyState:', document.readyState);
@@ -38,8 +41,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Check if React is loaded
     setTimeout(() => {
-      console.log('React loaded:', typeof React !== 'undefined');
-      console.log('ReactDOM loaded:', typeof ReactDOM !== 'undefined');
+      console.log('React loaded check:', typeof React !== 'undefined' ? 'Yes' : 'No');
+      console.log('ReactDOM loaded check:', typeof ReactDOM !== 'undefined' ? 'Yes' : 'No');
       debugElement.textContent += ' | React: ' + (typeof React !== 'undefined' ? '✓' : '✗');
       
       // Check if app root is populated

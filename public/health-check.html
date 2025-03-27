@@ -41,6 +41,12 @@
       document.getElementById('url').textContent = window.location.href;
       document.getElementById('time').textContent = new Date().toISOString();
       document.getElementById('user-agent').textContent = navigator.userAgent;
+      
+      // Log additional diagnostic information
+      console.log('Health check page loaded at:', window.location.href);
+      console.log('Page protocol:', window.location.protocol);
+      console.log('Page hostname:', window.location.hostname);
+      console.log('Page pathname:', window.location.pathname);
     });
   </script>
 </head>
