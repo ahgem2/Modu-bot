@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label';
 import { useToast } from '@/components/ui/use-toast';
 import { Loader2 } from 'lucide-react';
 import { useAuth } from '@/context/auth';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -50,16 +51,31 @@ const AuthModal = ({ isOpen, onClose, initialMode }: AuthModalProps) => {
         await login(email, password);
         console.log("Login success");
       } else {
+        if (password.length < 6) {
+          throw new Error('Password must be at least 6 characters long');
+        }
         await signup(name, email, password);
         console.log("Signup success");
       }
       handleClose();
     } catch (error: any) {
       console.error('Auth error:', error);
-      setError(error.message || "Authentication failed. Please try again.");
+      // Provide more user-friendly error messages
+      let errorMessage = error.message || "Authentication failed. Please try again.";
+      
+      // Handle specific Supabase error messages
+      if (errorMessage.includes('User already registered')) {
+        errorMessage = 'This email is already registered. Please log in instead.';
+      } else if (errorMessage.includes('Invalid login credentials')) {
+        errorMessage = 'Invalid email or password. Please try again.';
+      } else if (errorMessage.includes('Email not confirmed')) {
+        errorMessage = 'Please check your email to confirm your account before logging in.';
+      }
+      
+      setError(errorMessage);
       toast({
         title: mode === 'login' ? "Login failed" : "Signup failed",
-        description: error.message || "Please check your details and try again.",
+        description: errorMessage,
         variant: "destructive",
       });
     } finally {
@@ -85,9 +101,9 @@ const AuthModal = ({ isOpen, onClose, initialMode }: AuthModalProps) => {
         </DialogDescription>
         
         {error && (
-          <div className="bg-red-50 border border-red-200 text-red-800 rounded-md p-3 text-sm">
-            {error}
-          </div>
+          <Alert variant="destructive">
+            <AlertDescription>{error}</AlertDescription>
+          </Alert>
         )}
         
         <form onSubmit={handleSubmit} className="space-y-4 mt-4">
@@ -139,6 +155,9 @@ const AuthModal = ({ isOpen, onClose, initialMode }: AuthModalProps) => {
               disabled={isLoading}
               className="w-full"
             />
+            {mode === 'signup' && (
+              <p className="text-xs text-gray-500">Password must be at least 6 characters</p>
+            )}
           </div>
           
           <Button type="submit" disabled={isLoading} className="w-full">

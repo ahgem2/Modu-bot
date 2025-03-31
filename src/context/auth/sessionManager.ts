@@ -10,6 +10,7 @@ export const useSessionManager = (
 ) => {
   useEffect(() => {
     console.log("Setting up auth session manager");
+    let isInitialSessionChecked = false;
     
     // Check if user is already authenticated
     const checkSession = async () => {
@@ -25,9 +26,14 @@ export const useSessionManager = (
         if (data.session) {
           console.log("Session found:", data.session.user.id);
           const { user: supabaseUser } = data.session;
-          const userProfile = await transformUser(supabaseUser);
-          setUser(userProfile);
-          console.log("User profile set:", userProfile);
+          try {
+            const userProfile = await transformUser(supabaseUser);
+            setUser(userProfile);
+            console.log("User profile set:", userProfile);
+          } catch (profileError) {
+            console.error('Error transforming user:', profileError);
+            setUser(null);
+          }
         } else {
           console.log("No session found");
           setUser(null);
@@ -37,6 +43,7 @@ export const useSessionManager = (
         setUser(null);
       } finally {
         setIsLoading(false);
+        isInitialSessionChecked = true;
       }
     };
 
@@ -71,9 +78,16 @@ export const useSessionManager = (
             const userProfile = await transformUser(session.user);
             setUser(userProfile);
           }
+        } else if (event === 'INITIAL_SESSION' && isInitialSessionChecked) {
+          // Skip if we've already checked the initial session
+          return;
         }
         
-        setIsLoading(false);
+        // Only update loading state if this isn't our initial check
+        // (to prevent flashes of loading state when auth events occur)
+        if (isInitialSessionChecked) {
+          setIsLoading(false);
+        }
       }
     );
 

@@ -65,6 +65,15 @@ export const useAuthMethods = (
     console.log("Attempting signup for:", email);
     
     try {
+      // Validate inputs
+      if (!name || !email || !password) {
+        throw new Error('All fields are required');
+      }
+      
+      if (password.length < 6) {
+        throw new Error('Password must be at least 6 characters');
+      }
+      
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
@@ -87,33 +96,51 @@ export const useAuthMethods = (
 
       if (data.user) {
         console.log("Signup successful for user:", data.user.id);
-        // Create a profile record
-        await upsertProfile(data.user.id, {
-          name,
-          email,
-          credits: 100,
-          isPremium: false
-        });
-
-        const userProfile = await transformUser(data.user);
-        setUser(userProfile);
         
-        // Send welcome email
         try {
-          await supabase.functions.invoke('send-welcome-email', {
-            body: { 
-              email,
-              name
-            }
+          // Create a profile record
+          await upsertProfile(data.user.id, {
+            name,
+            email,
+            credits: 100,
+            isPremium: false
           });
-        } catch (emailError) {
-          console.error('Error sending welcome email:', emailError);
-          // Don't block signup if email fails
+          
+          const userProfile = await transformUser(data.user);
+          setUser(userProfile);
+          
+          // Send welcome email
+          try {
+            await supabase.functions.invoke('send-welcome-email', {
+              body: { 
+                email,
+                name
+              }
+            });
+            console.log("Welcome email sent successfully");
+          } catch (emailError) {
+            console.error('Error sending welcome email:', emailError);
+            // Don't block signup if email fails
+          }
+          
+          toast({
+            title: "Account created",
+            description: "Welcome to ModuBot! You've been given 100 credits to start.",
+          });
+        } catch (profileError) {
+          console.error('Error creating user profile:', profileError);
+          // We should still consider the signup successful even if profile creation fails
+          // as the auth account was created successfully
+          toast({
+            title: "Account created",
+            description: "Your account was created but there was an issue setting up your profile. Please try logging in again.",
+          });
         }
-        
+      } else if (data.session === null) {
+        // This means the user needs to confirm their email
         toast({
-          title: "Account created",
-          description: "Welcome to ModuBot! You've been given 100 credits to start.",
+          title: "Email confirmation required",
+          description: "Please check your email to confirm your account before logging in.",
         });
       }
     } catch (error: any) {
