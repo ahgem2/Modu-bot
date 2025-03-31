@@ -20,6 +20,7 @@ const AuthModal = ({ isOpen, onClose, initialMode }: AuthModalProps) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const { toast } = useToast();
   const { login, signup } = useAuth();
 
@@ -30,6 +31,7 @@ const AuthModal = ({ isOpen, onClose, initialMode }: AuthModalProps) => {
     setEmail('');
     setPassword('');
     setIsLoading(false);
+    setError(null);
   };
 
   const handleClose = () => {
@@ -40,20 +42,24 @@ const AuthModal = ({ isOpen, onClose, initialMode }: AuthModalProps) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    setError(null);
     console.log("Auth form submitted:", mode, email);
 
     try {
       if (mode === 'login') {
         await login(email, password);
+        console.log("Login success");
       } else {
         await signup(name, email, password);
+        console.log("Signup success");
       }
       handleClose();
-    } catch (error) {
+    } catch (error: any) {
       console.error('Auth error:', error);
+      setError(error.message || "Authentication failed. Please try again.");
       toast({
         title: mode === 'login' ? "Login failed" : "Signup failed",
-        description: "Please check your details and try again.",
+        description: error.message || "Please check your details and try again.",
         variant: "destructive",
       });
     } finally {
@@ -63,6 +69,7 @@ const AuthModal = ({ isOpen, onClose, initialMode }: AuthModalProps) => {
 
   const toggleMode = () => {
     setMode(mode === 'login' ? 'signup' : 'login');
+    setError(null);
   };
 
   return (
@@ -76,6 +83,12 @@ const AuthModal = ({ isOpen, onClose, initialMode }: AuthModalProps) => {
             ? 'Enter your email below to log in to your account.' 
             : 'Fill in the information below to create your account.'}
         </DialogDescription>
+        
+        {error && (
+          <div className="bg-red-50 border border-red-200 text-red-800 rounded-md p-3 text-sm">
+            {error}
+          </div>
+        )}
         
         <form onSubmit={handleSubmit} className="space-y-4 mt-4">
           {mode === 'signup' && (
